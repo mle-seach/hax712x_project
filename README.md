@@ -1,7 +1,7 @@
 # hax712x_project
 
 ##  Introduction
-Ce  projet Python  possède de buts princi . 
+Ce  projet Python  possède deux buts principaux . 
 
 Dans un premier tem, l'objectif est de prédire la consommation d'électricité  en France par quarts d'heure  le 08/12/2022. Il faudra également fournir des graphiques représentant  les prédictions des autres sources  telles que le gaz, le vent etc...
 
