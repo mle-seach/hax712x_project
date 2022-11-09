@@ -9,8 +9,8 @@ Created on Wed Nov  9 12:42:23 2022
 
 import pandas as pd
 import numpy as np
-import pooch 
-import os
+import pooch #installer via la commande : pip install pooch
+import os 
 import matplotlib.pyplot as plt
 from datetime import datetime 
 
