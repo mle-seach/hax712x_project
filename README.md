@@ -15,7 +15,7 @@ Afin de répartir au mieux  le travail, nous avons fait le choix de ''créer deu
 Nous avons également Guillaume à qui nous avons attribué le rôle de consultant, car de part son travail il ne peut pas s'investir réellement dans le projet.
 Bien évidemment , ces deux parties du projet étant liées , certains éléments utilisés dans une partie seront probablement utilisés dans une autre : chaque membre du groupe apportera sa pierre à l'édifice.
 
-Dans la partie prédiction, Sarah et Pauline travaille en collaboration cependant, Sarah se charge plus de la partie sur l'électricité en généralité et Pauline étudie plus les autres sources d'énergie.
+Dans la partie prédiction, Sarah et Pauline travaillent en collaboration cependant, Sarah se charge plus de la partie sur l'électricité en généralité et Pauline étudie plus les autres sources d'énergie.
 
 ## Contact:
 
