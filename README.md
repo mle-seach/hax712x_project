@@ -1,7 +1,7 @@
 # HAX712X Project
 
 ##  Introduction
-Ce  projet Python  possède deux buts principaux :
+Ce  projet Python possède deux buts principaux :
 
 -Dans un premier temps, l'objectif est de prédire la consommation d'électricité en France par quarts d'heure le 08/12/2022. Il faudra également fournir des graphiques représentant les prédictions des autres sources telles que le gaz, le vent etc...
 
@@ -11,9 +11,9 @@ Ce  projet Python  possède deux buts principaux :
 ## Programme de travail 
 
 ## Affectation des tâches 
-Afin de répartir au mieux  le travail, nous avons fait le choix de ''créer deux équipes'' : Mathieu et Thibault qui se chargeront de la partie carte intéractive et analyse  la consommation française d'électricite, et Sarah et Pauline qui se chargeront de la partie prédiction  du 8 décembre. 
+Afin de répartir au mieux le travail, nous avons fait le choix de ''créer deux équipes'' : Mathieu et Thibault qui se chargeront de la partie carte intéractive et analyse  la consommation française d'électricite, et Sarah et Pauline qui se chargeront de la partie prédiction  du 8 décembre. 
 Nous avons également Guillaume à qui nous avons attribué le rôle de consultant, car de part son travail il ne peut pas s'investir réellement dans le projet.
-Bien évidemment , ces deux parties du projet étant liées , certains éléments utilisés dans une partie seront probablement utilisés dans une autre : chaque membre du groupe apportera sa pierre à l'édifice.
+Bien évidemment, ces deux parties du projet étant liées, certains éléments utilisés dans une partie seront probablement utilisés dans une autre : chaque membre du groupe apportera sa pierre à l'édifice.
 
 Dans la partie prédiction, Sarah et Pauline travaillent en collaboration cependant, Sarah se charge plus de la partie sur l'électricité en généralité et Pauline étudie plus les autres sources d'énergie.
 
@@ -31,4 +31,4 @@ Sarah Matoub : sarah19mtb@gmail.com
 Mathieu Le-Seach : mathieu.le-seach@etu.umontpellier.fr
 
 
-Guillaume Bernardreymond : guillaume.bernardreymond@gmail.com
+Guillaume Bernard-Reymond : guillaume.bernardreymond@gmail.com
