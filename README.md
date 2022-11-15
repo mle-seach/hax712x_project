@@ -19,16 +19,16 @@ Dans la partie prédiction, Sarah et Pauline travaillent en collaboration cepend
 
 ## Contact:
 
-pauline.dusfourcastan@gmail.com
+Pauline Dusfour-Castan : pauline.dusfourcastan@gmail.com
 
 
-thibaultferretti@gmail.com
+Thibault Ferretti : thibaultferretti@gmail.com
 
 
-sarah19mtb@gmail.com
+Sarah Matoub : sarah19mtb@gmail.com
 
 
-mathieu.le-seach@etu.umontpellier.fr
+Mathieu Le-Seach : mathieu.le-seach@etu.umontpellier.fr
 
 
-guillaume.bernardreymond@gmail.com
+Guillaume Bernardreymond : guillaume.bernardreymond@gmail.com
