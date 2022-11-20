@@ -1,60 +1,99 @@
 import os
-import datetime
 
 from download import download
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import plotly.express as px
-from urllib import request
 import json
+from dash import Dash, dcc, html, Input, Output
+
+pd.set_option('display.max_columns', None)
 
 # Data cleaning
 # TODO look for missing data, separate per year
 
-url = 'https://data.enedis.fr/explore/dataset/consommation-annuell  e-residentielle-par-adresse/download'
+url = 'https://data.enedis.fr/explore/dataset/consommation-annuelle-residentielle-par-adresse/download'
 data_path = os.path.join(os.getcwd(), 'data_viz.csv')
 path = download(url, data_path, progressbar=True, verbose=True)
 
 df = pd.read_csv(data_path, sep=";")
-df.drop(['code_iris', 'nom_iris', 'numero_de_voie', 'indice_de_repetition', 'type_de_voie', 'libelle_de_voie',
-         'segment_de_client', 'adresse', 'tri_des_adresses'], axis=1, inplace=True)
+# Keeping useful columns, dropping duplicates, renaming for convenience
+df = df.loc[:, df.columns.intersection(['annee', 'code_commune', 'nom_commune',
+                                        'consommation_annuelle_moyenne_de_la_commune_mwh'])]
+df.drop_duplicates(inplace=True)
+df = df.rename(columns={"code_commune": "code", "nom_commune": "nom",
+                        "consommation_annuelle_moyenne_de_la_commune_mwh": "conso"})
 
-city = 'https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/communes-version-simplifiee.geojson'
-dept = 'https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements-version-simplifiee.geojson'
-region = 'https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions-version-simplifiee.geojson'
+
+
+city = '../../data/communes.geojson'
+dept = '../../data/departements.geojson'
+region = '../../data/regions.geojson'
+
+
+cities = json.load(open(city, 'r'))
+for feature in cities['features']:
+    feature["code_commune"] = feature["properties"]["code"]
 
 # Plots
-# TODO Violin plot per year
-
+# TODO Violin plot per year per city
 
 # Interactive map
-# TODO violin plot when hovering over city, define class with its methods for the map
-# Beaucoup de villes manquantes...
-
-def read_geojson(url):
-    with request.urlopen(url) as url:
-        jdata = json.loads(url.read().decode())
-    return jdata
+# TODO define a class to get max min per region, dept
 
 
-jdata = read_geojson(city)
+# App layout
+app = Dash(__name__)
 
-fig = px.choropleth_mapbox(df, geojson=jdata,
-                           featureidkey='properties.code',
-                           locations='code_commune',
-                           color='consommation_annuelle_moyenne_de_la_commune_mwh',
-                           animation_frame='annee',
-                           color_continuous_scale='viridis',
-                           zoom=4.5,
-                           mapbox_style='carto-positron')
+app.layout = html.Div([
 
-fig.update_layout(title_text='Consommation annuelle moyenne de la commune par habitant',
-                  title_x=0.5,
-                  coloraxis_colorscale='viridis',
-                  mapbox=dict(style='carto-positron',
-                              zoom=4.5,
-                              center={"lat": 46.2276, "lon": 2.2137},
-                              ))
-fig.show()
+    html.H1("French electricity consumption", style={'text-align': 'center'}),
+
+    dcc.Dropdown(id="slct_year",
+                 options=[
+                     {"label": "2018", "value": 2018},
+                     {"label": "2019", "value": 2019},
+                     {"label": "2020", "value": 2020},
+                     {"label": "2021", "value": 2021}],
+                 multi=False,
+                 value=2018,
+                 style={'width': "40%"}
+                 ),
+
+    html.Div(id='output_container', children=[]),
+    html.Br(),
+
+    dcc.Graph(id='elec_map', figure={})
+
+])
+# Connect plotly to Dash
+@app.callback(
+    [Output(component_id='output_container', component_property='children'),
+     Output(component_id='elec_map', component_property='figure')],
+    [Input(component_id='slct_year', component_property='value')]
+)
+def update_graph(option_slctd):
+    print(option_slctd)
+    print(type(option_slctd))
+
+    container = "The year chosen by the user was: {}".format(option_slctd)
+
+    dff = df.copy()
+    dff = dff[dff["annee"] == option_slctd]
+
+    fig = px.choropleth_mapbox(dff.head(20),
+                               geojson=cities,
+                               color="conso",
+                               locations="code",
+                               featureidkey="properties.code",
+                               mapbox_style="carto-positron",
+                               hover_data=['conso'],
+                               zoom=4,
+                               center={"lat": 46, "lon": 2},
+                               opacity=0.6,
+                               )
+
+    return container, fig
+
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
