@@ -19,7 +19,7 @@ df = pd.read_csv(data_path, sep=";", usecols=[0, 7, 8, 13])
 df.drop_duplicates(inplace=True)
 df = df.rename(columns={"code_commune": "code", "nom_commune": "nom",
                         "consommation_annuelle_moyenne_de_la_commune_mwh": "conso"})
-# Dept for each city
+# Dept for each city, delete last 3 digits of the code
 df['dept'] = df['code'].apply(lambda x: int(str(x)[:-3]))
 
 # TODO fix path names with os
@@ -37,6 +37,7 @@ cities = json.load(open(city, 'r'))
 def max_conso(dept, year=2018):
     """Get the city with maximum consumption on the given year
     and return city, conso"""
+    dept_df = df[df['annee'] == year and df['dept'] == dept]
     conso = 0
     town = 0
     return town, conso
@@ -45,6 +46,7 @@ def max_conso(dept, year=2018):
 def min_conso(dept, year=2018):
     """Get the city with maximum consumption on the given year
     and return city, conso"""
+    dept_df = df[df['annee'] == year and df['dept'] == dept]
     conso = 0
     town = 0
     return town, conso
@@ -92,9 +94,7 @@ def update_graph(option_slctd):
     dff = df.copy()
     dff = dff[dff["annee"] == option_slctd]
 
-    # Map not showing anything at >=474, memory/cache problem?
-    n = 473
-    fig = px.choropleth_mapbox(dff.head(n),
+    fig = px.choropleth_mapbox(dff,
                                geojson=cities,
                                color="conso",
                                locations="code",
