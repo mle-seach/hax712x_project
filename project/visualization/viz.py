@@ -19,7 +19,8 @@ df = pd.read_csv(data_path, sep=";", usecols=[0, 7, 8, 13])
 df.drop_duplicates(inplace=True)
 df = df.rename(columns={"code_commune": "code", "nom_commune": "nom",
                         "consommation_annuelle_moyenne_de_la_commune_mwh": "conso"})
-
+# Dept for each city
+df['dept'] = df['code'].apply(lambda x: int(str(x)[:-3]))
 
 # TODO fix path names with os
 city = '../../data/communes.geojson'
@@ -29,11 +30,27 @@ region = '../../data/regions.geojson'
 cities = json.load(open(city, 'r'))
 
 # Plots
-# TODO Violin plot per year per city
-
-# Interactive map
+# TODO Violin plot per city
 # TODO define a class to get max min per region, dept
 
+
+def max_conso(dept, year=2018):
+    """Get the city with maximum consumption on the given year
+    and return city, conso"""
+    conso = 0
+    town = 0
+    return town, conso
+
+
+def min_conso(dept, year=2018):
+    """Get the city with maximum consumption on the given year
+    and return city, conso"""
+    conso = 0
+    town = 0
+    return town, conso
+
+
+# Interactive map
 # App layout
 app = Dash(__name__)
 
@@ -58,6 +75,8 @@ app.layout = html.Div([
     dcc.Graph(id='elec_map', figure={})
 
 ])
+
+
 # Connect plotly to Dash
 @app.callback(
     [Output(component_id='output_container', component_property='children'),
