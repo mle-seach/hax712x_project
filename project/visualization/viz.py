@@ -31,74 +31,71 @@ df['nom'] = df['nom'].str.lower()
 
 # TODO fix path names with os
 city = '../../data/communes.geojson'
-dept = '../../data/departements.geojson'
-region = '../../data/regions.geojson'
 
 cities = json.load(open(city, 'r'))
 
-# Plots
-# TODO Violin plot per city
-# TODO define a class to get max min per region, dept
 
-
+# Plots and max/min
 def max_conso(dept, year=2018):
-    """Get the city with maximum consumption on the given year
-    and return city, conso"""
-    dept_df = df[df['annee'] == year and df['dept'] == dept]
-    conso = 0
-    town = 0
-    return town, conso
+    """Get the city with maximum consumption of the dept on the given year
+    and return city name and its conso"""
+    temp_df = df[df['annee'] == year]
+    temp_df = temp_df[temp_df['dept'] == dept]
+    row = temp_df[temp_df['conso'] == temp_df['conso'].max()]
+
+    return row.iloc[0]['nom'], row.iloc[0]['conso']
 
 
 def min_conso(dept, year=2018):
     """Get the city with maximum consumption on the given year
     and return city, conso"""
-    dept_df = df[df['annee'] == year and df['dept'] == dept]
-    conso = 0
-    town = 0
-    return town, conso
+    temp_df = df[df['annee'] == year]
+    temp_df = temp_df[temp_df['dept'] == dept]
+    row = temp_df[temp_df['conso'] == temp_df['conso'].min()]
+
+    return row.iloc[0]['nom'], row.iloc[0]['conso']
 
 
 class City:
     def __init__(self, id):
         """Constructor of City objects.
-        code -- code of the city (recommended), can also be the name of the city in lowercase"""
+        id -- code of the city (recommended), can also be the name of the city in lowercase"""
         self.id = id
 
     def kde(self):
         """Plots the kde of the city over the available years"""
         if type(self.id) == int:
-            kde_df = df[df['code'] == self.id]
+            temp_df = df[df['code'] == self.id]
         if type(self.id) == str:
-            kde_df = df[df['nom'] == self.id]
-        fig = sns.kdeplot(data=kde_df, x='conso', fill=True)
+            temp_df = df[df['nom'] == self.id]
+        fig = sns.kdeplot(data=temp_df, x='conso', fill=True)
         return fig
 
     def swarm(self):
         """Plots the swarm plot of the city over the available years"""
         if type(self.id) == int:
-            swarm_df = df[df['code'] == self.id]
+            temp_df = df[df['code'] == self.id]
         if type(self.id) == str:
-            swarm_df = df[df['nom'] == self.id]
-        fig = sns.swarmplot(data=swarm_df, x='conso')
+            temp_df = df[df['nom'] == self.id]
+        fig = sns.swarmplot(data=temp_df, x='conso')
         return fig
 
     def violin(self):
         """Plots the violin plot of the city over the available years"""
         if type(self.id) == int:
-            violin_df = df[df['code'] == self.id]
+            temp_df = df[df['code'] == self.id]
         if type(self.id) == str:
-            violin_df = df[df['nom'] == self.id]
-        fig = sns.violinplot(data=violin_df, x='conso')
+            temp_df = df[df['nom'] == self.id]
+        fig = sns.violinplot(data=temp_df, x='conso')
         return fig
 
     def bar(self):
         """Plots the bar plot of the city over the available years"""
         if type(self.id) == int:
-            bar_df = df[df['code'] == self.id]
+            temp_df = df[df['code'] == self.id]
         if type(self.id) == str:
-            bar_df = df[df['nom'] == self.id]
-        fig = sns.barplot(data=bar_df, x='annee', y='conso')
+            temp_df = df[df['nom'] == self.id]
+        fig = sns.barplot(data=temp_df, x='annee', y='conso')
         return fig
 
     def show(self):
