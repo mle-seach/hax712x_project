@@ -6,6 +6,7 @@ import plotly.express as px
 import json
 import seaborn as sns
 import matplotlib.pyplot as plt
+from flask_caching import Cache
 from dash import Dash, dcc, html, Input, Output
 
 
@@ -47,7 +48,7 @@ def max_conso(dept, year=2018):
 
 
 def min_conso(dept, year=2018):
-    """Get the city with maximum consumption on the given year
+    """Get the city with minimum consumption of the dept on the given year
     and return city, conso"""
     temp_df = df[df['annee'] == year]
     temp_df = temp_df[temp_df['dept'] == dept]
@@ -108,10 +109,17 @@ class City:
 # App layout
 app = Dash(__name__)
 
+cache = Cache(app.server, config={
+    'CACHE_TYPE': 'filesystem',
+    'CACHE_DIR': 'cache-directory'
+})
+CACHE_TIMEOUT = int(os.environ.get('DASH_CACHE_TIMEOUT', '60'))
+
 app.layout = html.Div([
 
     html.H1("French electricity consumption", style={'text-align': 'center'}),
-
+    # Control Panel
+    html.Div([
     dcc.Dropdown(id="slct_year",
                  options=[
                      {"label": "2018", "value": 2018},
@@ -126,8 +134,19 @@ app.layout = html.Div([
     html.Div(id='output_container', children=[]),
     html.Br(),
 
-    dcc.Graph(id='elec_map', figure={})
+    # Visuals
+    html.Div(className="row", children=[
+        html.Div(className="seven columns pretty_container", children=[
+            dcc.Markdown(children='_Click on the map to show the city\'s consumption._'),
+            dcc.Graph(id='elec_map')
+        ]),
+        html.Div(className="five columns pretty_container", children=[
+            dcc.Graph(id='plots'),
+        ]),
+    ]),
+    # dcc.Graph(id='elec_map', figure={})
 
+    ]),
 ])
 
 
