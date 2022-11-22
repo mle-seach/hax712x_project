@@ -5,9 +5,12 @@ Created on Wed Nov  9 20:06:02 2022
 @author: Pauline
 """
 import pandas as pd
-
 import matplotlib.pyplot as plt
 import pylab
+import numpy as np
+import pooch 
+import os
+from datetime import datetime
 
 # Paramètres d'affichage
 pylab.style.use('fivethirtyeight') 
@@ -21,8 +24,14 @@ params = {'legend.fontsize': 'x-large',
           'ytick.labelsize':'x-large'}
 pylab.rcParams.update(params)
 
+url = "https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B" 
+path_target = './consommation3.csv'
+path, fname = os.path.split(path_target)
+pooch.retrieve(url, path=path, fname=fname, known_hash=None)
 
-data = pd.read_csv('eco2mix-national-cons-def.csv', delimiter=';')
+
+# Visualisation des données
+data = pd.read_csv("consommation3.csv", sep=";")
 #print(data.head(10))
 
 # Creation de notre jeu de données et nettoyage
