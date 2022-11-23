@@ -24,16 +24,16 @@ df = df.rename(columns={"code_commune": "code", "nom_commune": "nom",
                         "consommation_annuelle_moyenne_de_la_commune_mwh": "conso"})
 # Dept for each city, delete last 3 digits of the code
 df['dept'] = df['code'].apply(lambda x: int(str(x)[:-3]))
+# Adding 0 at the start of the city code if in one of the first 9 dept
+df['code'] = df['code'].apply(lambda id: str(id) if id > 9999 else "0" + str(id))
 # Only one NaN, replacing with the appropriate city name, Florange
 df.fillna('Florange', inplace=True)
 # Converting city names to lower case to avoid case errors
 df['nom'] = df['nom'].str.lower()
 
 
-# TODO fix path names with os
-city = '../../data/communes.geojson'
-
-cities = json.load(open(city, 'r'))
+city_path = '../../data/communes.geojson'
+cities = json.load(open(city_path, 'r'))
 
 
 # Plots and max/min
@@ -176,6 +176,10 @@ def update_graph(option_slctd):
                                center={"lat": 47, "lon": 2},
                                opacity=0.6,
                                )
+
+    hovertemplate = '<br>City code: %{location}' \
+                    '<br>Conso: %{customdata:.3s} MWh/hb'
+    fig.data[0]['hovertemplate'] = hovertemplate
 
     return container, fig
 
