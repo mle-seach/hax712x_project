@@ -33,19 +33,39 @@ Une partie de ce projet a été effectuée sur Jupyter Notebook , avant de pouvo
 
 ## Deuxième étape : 
 
+- Clônez le référentiel et accédez au dossier prédiction :
 
+```bash 
+git clone https://github.com/mle-seach/hax712x_project.git 
+cd hax712x_project/project/prediction/
+```
 
+- Créez un nouvel environnement de travail nommé "trackelec_env":
 
+```bash
+conda create -n trackelec_env python=3.9.12
+```
+- Après avoir basculé dans votre nouvel environnement python, téléchargez les modules présents dans le fichier requirements.txt via une commande `pip` suivante:
 
+```bash
+pip install -r requirements.txt 
+``` 
+- Après avoir effectué toutes ces manipulations , vous pouvez enfin installer notre module `trackelec` via la commande suivante :
 
-
+```bash
+pip install 
+``` 
 
 
 
 
 # Prédiction :
 
+Pour cette partie nous allons comparer deux méthodes de prédictions :
 
+- Une qui s'appuie sur la moyenne empirique.
+
+- Une autre méthode qui s'appuie sur le modèle ARIMA (Auto Regressive Integrated Moving average). 
 
 
 
