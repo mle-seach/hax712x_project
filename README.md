@@ -1,11 +1,24 @@
-# HAX712X Project
+# HAX712X Project TRACKELEC
 
 ##  Introduction
+
+Bienvenue sur le github de notre projet nommé TRACKELEC.
+
 Ce  projet Python possède deux buts principaux :
 
--Dans un premier temps, l'objectif est de prédire la consommation d'électricité en France par quarts d'heure le 08/12/2022. Il faudra également fournir des graphiques représentant les prédictions des autres sources telles que le gaz, le vent etc...
+-Dans un premier temps, l'objectif est de prédire la consommation d'électricité en France le 08/12/2022. Il faudra également fournir des graphiques représentant les prédictions des différentes sources électriques telles que le gaz, le vent etc...
 
--Dans un second temps, notre mission est de créer ue carte intéractive fournissant la consommation annuelle moyenne d'électricite des français entre 2018 et 2021 afin de mieux comprendre les dépenses électriques en France. 
+-Dans un second temps, notre mission est de créer une carte intéractive fournissant la consommation annuelle moyenne d'électricite des français entre 2018 et 2021 afin de mieux comprendre les dépenses électriques en France. 
+
+## Histoire du nom du projet
+
+Le nom de notre projet provient des mots tracteur et électricité. 
+En effet, depuis quelques années maintenant l'utilisation de voitures électriques s'est démocratisée en France ce qui a chamboulé la consommation en électricité des français par rapport aux débuts des années 2000. Cependant la grande révolution des engins électriques reste le développement de tracteurs électriques pour travailler dans les champs. 
+
+Nous avons donc choisi d'associer le mot électricité (qui est le coeur de notre projet) avec le mot tracteur (qui représente l'innovation dans le mode électrique). 
+
+Vous pouvez également constater que trackelec contient un autre jeu de mot, trackelec peut se voir comme track-elec, soit suivre l'électricité, ce qui est le but de notre projet.
+
 
 
 ## Programme de travail 
