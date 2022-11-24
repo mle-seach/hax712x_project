@@ -21,13 +21,19 @@ Vous pouvez également constater que trackelec contient un autre jeu de mot, tra
 
 # Préparation de l'environnement de travail :
 
-Une partie de ce projet a été effectuée sur Jupyter Notebook , avant de pouvoir expérimenter notre code , vous devez d'abord vous assurer d'avoir un environnement de travail fonctionnel (si celà est déja fait vous pouvez passer à la deuxième étape).
+Une partie de ce projet a été effectuée sur Jupyter Notebook , avant de pouvoir expérimenter notre code , vous devez d'abord vous assurer d'avoir un environnement de travail fonctionnel , (si celà est déja fait vous pouvez passer à la deuxième étape).
 
 ## Première étape : 
 
  - Installez `Anaconda` en suivant les instructions sur le lien : <https://www.anaconda.com/products/distribution> .
  
- - Installez `Jupyter Notebook` 
+ - Lancez `Jupyter Notebook` après avoir lancé `Anaconda` en cliquant sur l'icône "launch" .
+ 
+ Si vous avez des difficultés nous vous invitions à consulter le cours [IntroPython.pdf] (http://josephsalmon.eu/enseignement/Montpellier/HLMA310/IntroPython.pdf).
+
+## Deuxième étape : 
+
+
 
 
 
@@ -42,11 +48,11 @@ Une partie de ce projet a été effectuée sur Jupyter Notebook , avant de pouvo
 
 
 
+
+
 # Projet Mid-term :
 
-## Programme de travail 
-
-## Affectation des tâches 
+## Programme de travail et affectation des tâches 
 Afin de répartir au mieux le travail, nous avons fait le choix de ''créer deux équipes'' : Mathieu et Thibault qui se chargeront de la partie carte intéractive et analyse  la consommation française d'électricite, et Sarah et Pauline qui se chargeront de la partie prédiction  du 8 décembre. 
 Nous avons également Guillaume à qui nous avons attribué le rôle de consultant, car de part son travail il ne peut pas s'investir réellement dans le projet.
 Bien évidemment, ces deux parties du projet étant liées, certains éléments utilisés dans une partie seront probablement utilisés dans une autre : chaque membre du groupe apportera sa pierre à l'édifice.
