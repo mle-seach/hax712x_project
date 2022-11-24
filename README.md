@@ -13,7 +13,7 @@ Ce  projet Python possède deux buts principaux :
 ## Histoire du nom du projet
 
 Le nom de notre projet provient des mots tracteur et électricité. 
-En effet, depuis quelques années maintenant l'utilisation de voitures électriques c'est démocratisée en France ce qui a chamboulé la consommation en électricité des français par rapport aux débuts des années 2000. Cependant la grande révolution des engins électriques reste le développement de tracteurs électriques pour travailler dans les champs. 
+En effet, depuis quelques années maintenant l'utilisation de voitures électriques s'est démocratisée en France ce qui a chamboulé la consommation en électricité des français par rapport aux débuts des années 2000. Cependant la grande révolution des engins électriques reste le développement de tracteurs électriques pour travailler dans les champs. 
 
 Nous avons donc choisi d'associer le mot électricité (qui est le coeur de notre projet) avec le mot tracteur (qui représente l'innovation dans le mode électrique). 
 
