@@ -1,4 +1,22 @@
 repos:
+  # various checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: mixed-line-ending
+      - id: check-ast
+      - id: check-added-large-files
+  # format code
+  - repo: https://github.com/psf/black
+    rev: 21.12b0
+    hooks:
+      - id: black
+  # check poetry and dependencies
   - repo: https://github.com/python-poetry/poetry
     rev: '1.2'
     hooks:
