@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "hax712x-project"
+version = "0.1.0"
+description = ""
+authors = ["mle-seach <mle-seach@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "hax712x_project"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^1.23.5"
+pandas = "^1.5.2"
+matplotlib = "^3.6.2"
+plotly = "^5.11.0"
+download = "^0.3.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
