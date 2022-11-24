@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "hax712x-project"
+name = "trackelec"
 version = "0.1.0"
 description = ""
 authors = [
@@ -10,7 +10,7 @@ authors = [
 	"mle-seach <mle-seach@users.noreply.github.com>"
 ]
 readme = "README.md"
-packages = [{include = "project"}]
+packages = [{include = "Trackelec"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
