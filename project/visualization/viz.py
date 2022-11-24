@@ -22,19 +22,22 @@ df = pd.read_csv(data_path, sep=";", usecols=[0, 7, 8, 13])
 df.drop_duplicates(inplace=True)
 df = df.rename(columns={"code_commune": "code", "nom_commune": "nom",
                         "consommation_annuelle_moyenne_de_la_commune_mwh": "conso"})
-# Dept for each city, delete last 3 digits of the code
-df['dept'] = df['code'].apply(lambda x: int(str(x)[:-3]))
 # Adding 0 at the start of the city code if in one of the first 9 dept
 df['code'] = df['code'].apply(lambda id: str(id) if id > 9999 else "0" + str(id))
+# Dept for each city, delete last 3 digits of the code
+df['dept'] = df['code'].apply(lambda x: int(str(x)[:-3]))
 # Only one NaN, replacing with the appropriate city name, Florange
 df.fillna('Florange', inplace=True)
 # Converting city names to lower case to avoid case errors
 df['nom'] = df['nom'].str.lower()
 
-
+# TODO fix geojson paths
 city_path = '../../data/communes.geojson'
+dept_path = '../../data/dept.geojson'
 cities = json.load(open(city_path, 'r'))
 
+# TODO @memoize def compute_map
+# TODO map by dept
 
 # Plots and max/min
 def max_conso(dept, year=2018):
@@ -60,49 +63,32 @@ def min_conso(dept, year=2018):
 class City:
     def __init__(self, id):
         """Constructor of City objects.
-        id -- code of the city (recommended), can also be the name of the city in lowercase"""
+        id -- code of the city"""
         self.id = id
 
-    def kde(self):
-        """Plots the kde of the city over the available years"""
-        if type(self.id) == int:
-            temp_df = df[df['code'] == self.id]
-        if type(self.id) == str:
-            temp_df = df[df['nom'] == self.id]
-        fig = sns.kdeplot(data=temp_df, x='conso', fill=True)
-        return fig
+    # def kde(self):
+    #     """Plots the kde of the city over the available years"""
+    #     temp_df = df[df['code'] == self.id]
+    #     fig = px.kdeplot(data=temp_df, x='conso', fill=True)
+    #     return fig
 
     def swarm(self):
         """Plots the swarm plot of the city over the available years"""
-        if type(self.id) == int:
-            temp_df = df[df['code'] == self.id]
-        if type(self.id) == str:
-            temp_df = df[df['nom'] == self.id]
-        fig = sns.swarmplot(data=temp_df, x='conso')
+        temp_df = df[df['code'] == self.id]
+        fig = px.strip(temp_df, x='conso')
         return fig
 
     def violin(self):
         """Plots the violin plot of the city over the available years"""
-        if type(self.id) == int:
-            temp_df = df[df['code'] == self.id]
-        if type(self.id) == str:
-            temp_df = df[df['nom'] == self.id]
-        fig = sns.violinplot(data=temp_df, x='conso')
+        temp_df = df[df['code'] == self.id]
+        fig = px.violin(temp_df, x='conso')
         return fig
 
     def bar(self):
         """Plots the bar plot of the city over the available years"""
-        if type(self.id) == int:
-            temp_df = df[df['code'] == self.id]
-        if type(self.id) == str:
-            temp_df = df[df['nom'] == self.id]
-        fig = sns.barplot(data=temp_df, x='annee', y='conso')
+        temp_df = df[df['code'] == self.id]
+        fig = px.bar(temp_df, x='annee', y='conso')
         return fig
-
-    def show(self):
-        """Displays the plot"""
-        # TODO
-        pass
 
 
 # Interactive map
@@ -131,6 +117,17 @@ app.layout = html.Div([
                  style={'width': "40%"}
                  ),
 
+    dcc.Dropdown(id="slct_plot_style",
+                 options=[
+                     {"label": "Violin", "value": 'violin'},
+                     # {"label": "KDE", "value": 'kde'},
+                     {"label": "Swarm", "value": 'swarm'},
+                     {"label": "Bar", "value": 'bar'}],
+                 multi=False,
+                 value='violin',
+                 style={'width': "40%"}
+                 ),
+
     html.Div(id='output_container', children=[]),
     html.Br(),
 
@@ -141,7 +138,7 @@ app.layout = html.Div([
             dcc.Graph(id='elec_map')
         ]),
         html.Div(className="five columns pretty_container", children=[
-            dcc.Graph(id='plots'),
+            dcc.Graph(id='plot'),
         ]),
     ]),
     # dcc.Graph(id='elec_map', figure={})
@@ -158,7 +155,6 @@ app.layout = html.Div([
 )
 def update_graph(option_slctd):
     print(option_slctd)
-    print(type(option_slctd))
 
     container = "The year chosen by the user was: {}".format(option_slctd)
 
@@ -182,6 +178,23 @@ def update_graph(option_slctd):
     fig.data[0]['hovertemplate'] = hovertemplate
 
     return container, fig
+
+
+@app.callback(
+    Output(component_id='plot', component_property='figure'),
+    [Input(component_id='slct_plot_style', component_property='value')]
+)
+def update_plot(option_slctd):
+    print(option_slctd)
+
+    if option_slctd == 'violin':
+        fig2 = City('34172').violin()
+    if option_slctd == 'swarm':
+        fig2 = City('34172').swarm()
+    if option_slctd == 'bar':
+        fig2 = City('34172').bar()
+
+    return fig2
 
 
 if __name__ == '__main__':
