@@ -29,7 +29,7 @@ Une partie de ce projet a été effectuée sur Jupyter Notebook , avant de pouvo
  
  - Lancez `Jupyter Notebook` après avoir lancé `Anaconda` en cliquant sur l'icône "launch" .
  
- Si vous avez des difficultés nous vous invitions à consulter le cours [IntroPython.pdf] (http://josephsalmon.eu/enseignement/Montpellier/HLMA310/IntroPython.pdf).
+ Si vous avez des difficultés nous vous invitions à consulter le cours [IntroPython.pdf](http://josephsalmon.eu/enseignement/Montpellier/HLMA310/IntroPython.pdf).
 
 ## Deuxième étape : 
 
