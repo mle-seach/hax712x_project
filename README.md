@@ -8,23 +8,23 @@ Ce  projet Python possède deux buts principaux :
 
 -Dans un premier temps, l'objectif est de prédire la consommation d'électricité en France le 08/12/2022. Il faudra également fournir des graphiques représentant les prédictions des différentes sources électriques telles que le gaz, le vent etc...
 
--Dans un second temps, notre mission est de créer une carte intéractive fournissant la consommation annuelle moyenne d'électricite des français entre 2018 et 2021 afin de mieux comprendre les dépenses électriques en France. 
+-Dans un second temps, notre mission est de créer une carte intéractive fournissant la consommation annuelle moyenne d'électricite des français entre 2018 et 2021 afin de mieux comprendre les dépenses électriques en France.
 
 ## Histoire du nom du projet
 
-Le nom de notre projet provient des mots tracteur et électricité. 
-En effet, depuis quelques années maintenant l'utilisation de voitures électriques s'est démocratisée en France ce qui a chamboulé la consommation en électricité des français par rapport aux débuts des années 2000. Cependant la grande révolution des engins électriques reste le développement de tracteurs électriques pour travailler dans les champs. 
+Le nom de notre projet provient des mots tracteur et électricité.
+En effet, depuis quelques années maintenant l'utilisation de voitures électriques s'est démocratisée en France ce qui a chamboulé la consommation en électricité des français par rapport aux débuts des années 2000.Cependant la grande révolution des engins électriques reste le développement de tracteurs électriques pour travailler dans les champs.
 
-Nous avons donc choisi d'associer le mot électricité (qui est le coeur de notre projet) avec le mot tracteur (qui représente l'innovation dans le mode électrique). 
+Nous avons donc choisi d'associer le mot électricité (qui est le coeur de notre projet) avec le mot tracteur (qui représente l'innovation dans le mode électrique).
 
 Vous pouvez également constater que trackelec contient un autre jeu de mot, trackelec peut se voir comme track-elec, soit suivre l'électricité, ce qui est le but de notre projet.
 
 
 
-## Programme de travail 
+## Programme de travail
 
-## Affectation des tâches 
-Afin de répartir au mieux le travail, nous avons fait le choix de ''créer deux équipes'' : Mathieu et Thibault qui se chargeront de la partie carte intéractive et analyse  la consommation française d'électricite, et Sarah et Pauline qui se chargeront de la partie prédiction  du 8 décembre. 
+## Affectation des tâches
+Afin de répartir au mieux le travail, nous avons fait le choix de ''créer deux équipes'' : Mathieu et Thibault qui se chargeront de la partie carte intéractive et analyse  la consommation française d'électricite, et Sarah et Pauline qui se chargeront de la partie prédiction  du 8 décembre.
 Nous avons également Guillaume à qui nous avons attribué le rôle de consultant, car de part son travail il ne peut pas s'investir réellement dans le projet.
 Bien évidemment, ces deux parties du projet étant liées, certains éléments utilisés dans une partie seront probablement utilisés dans une autre : chaque membre du groupe apportera sa pierre à l'édifice.
 
