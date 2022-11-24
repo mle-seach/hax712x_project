@@ -2,7 +2,13 @@
 name = "hax712x-project"
 version = "0.1.0"
 description = ""
-authors = ["mle-seach <mle-seach@users.noreply.github.com>"]
+authors = [
+	"Pauline Dusfour-Castan <pauline.dusfourcastan@gmail.com>",
+	"Thibault Ferretti <thibaultferretti@gmail.com>",
+	"Sarah Matoub <sarah19mtb@gmail.com>",
+	"Guillaume Bernard-Reymond <guillaume.bernardreymond@gmail.com>",
+	"mle-seach <mle-seach@users.noreply.github.com>"
+]
 readme = "README.md"
 packages = [{include = "hax712x_project"}]
 
