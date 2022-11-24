@@ -19,7 +19,30 @@ Nous avons donc choisi d'associer le mot électricité (qui est le coeur de notr
 
 Vous pouvez également constater que trackelec contient un autre jeu de mot, trackelec peut se voir comme track-elec, soit suivre l'électricité, ce qui est le but de notre projet.
 
+# Préparation de l'environnement de travail :
 
+Une partie de ce projet a été effectuée sur Jupyter Notebook , avant de pouvoir expérimenter notre code , vous devez d'abord vous assurer d'avoir un environnement de travail fonctionnel (si celà est déja fait vous pouvez passer à la deuxième étape).
+
+## Première étape : 
+
+ - Installez `Anaconda` en suivant les instructions sur le lien : <https://www.anaconda.com/products/distribution> .
+ 
+ - Installez `Jupyter Notebook` 
+
+
+
+
+
+
+
+
+
+# Prédiction :
+
+
+
+
+# Projet Mid-term :
 
 ## Programme de travail 
 
