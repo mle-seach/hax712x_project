@@ -4,8 +4,6 @@ from download import download
 import pandas as pd
 import plotly.express as px
 import json
-import seaborn as sns
-import matplotlib.pyplot as plt
 from flask_caching import Cache
 from dash import Dash, dcc, html, Input, Output
 
@@ -114,7 +112,7 @@ app.layout = html.Div([
                      {"label": "2021", "value": 2021}],
                  multi=False,
                  value=2018,
-                 style={'width': "40%"}
+                 style={'width': "40%", 'display': 'inline-block'}
                  ),
 
     dcc.Dropdown(id="slct_plot_style",
@@ -125,38 +123,32 @@ app.layout = html.Div([
                      {"label": "Bar", "value": 'bar'}],
                  multi=False,
                  value='violin',
-                 style={'width': "40%"}
+                 style={'width': "40%", 'display': 'inline-block'}
                  ),
 
-    html.Div(id='output_container', children=[]),
     html.Br(),
 
     # Visuals
     html.Div(className="row", children=[
         html.Div(className="seven columns pretty_container", children=[
             dcc.Markdown(children='_Click on the map to show the city\'s consumption._'),
-            dcc.Graph(id='elec_map')
+            dcc.Graph(id='elec_map', style={'width': '50%', 'height': '50%', 'display': 'inline-block'})
         ]),
-        html.Div(className="five columns pretty_container", children=[
-            dcc.Graph(id='plot'),
+        html.Div(className="row2", children=[
+            dcc.Graph(id='plot', style={'width': '50%', 'height': '50%', 'display': 'inline-block'}),
         ]),
     ]),
-    # dcc.Graph(id='elec_map', figure={})
 
     ]),
 ])
 
-
 # Connect plotly to Dash
 @app.callback(
-    [Output(component_id='output_container', component_property='children'),
-     Output(component_id='elec_map', component_property='figure')],
+    Output(component_id='elec_map', component_property='figure'),
     [Input(component_id='slct_year', component_property='value')]
 )
 def update_graph(option_slctd):
     print(option_slctd)
-
-    container = "The year chosen by the user was: {}".format(option_slctd)
 
     dff = df.copy()
     dff = dff[dff["annee"] == option_slctd]
@@ -177,7 +169,7 @@ def update_graph(option_slctd):
                     '<br>Conso: %{customdata:.3s} MWh/hb'
     fig.data[0]['hovertemplate'] = hovertemplate
 
-    return container, fig
+    return fig
 
 
 @app.callback(
@@ -187,12 +179,14 @@ def update_graph(option_slctd):
 def update_plot(option_slctd):
     print(option_slctd)
 
+    code='34172'
+
     if option_slctd == 'violin':
-        fig2 = City('34172').violin()
+        fig2 = City(code).violin()
     if option_slctd == 'swarm':
-        fig2 = City('34172').swarm()
+        fig2 = City(code).swarm()
     if option_slctd == 'bar':
-        fig2 = City('34172').bar()
+        fig2 = City(code).bar()
 
     return fig2
 
