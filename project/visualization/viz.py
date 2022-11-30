@@ -30,12 +30,12 @@ df.fillna('Florange', inplace=True)
 df['nom'] = df['nom'].str.lower()
 
 # TODO fix geojson paths
-city_path = '../../data/communes.geojson'
+city_path = '../../data/communes2.json'
 dept_path = '../../data/dept.geojson'
 cities = json.load(open(city_path, 'r'))
 
-# TODO @memoize def compute_map
 # TODO map by dept
+
 
 # Plots and max/min
 def max_conso(dept, year=2018):
@@ -64,33 +64,27 @@ class City:
         id -- code of the city"""
         self.id = id
 
-    # def kde(self):
-    #     """Plots the kde of the city over the available years"""
-    #     temp_df = df[df['code'] == self.id]
-    #     fig = px.kdeplot(data=temp_df, x='conso', fill=True)
-    #     return fig
-
     def swarm(self):
         """Plots the swarm plot of the city over the available years"""
         temp_df = df[df['code'] == self.id]
-        fig = px.strip(temp_df, x='conso')
+        fig = px.strip(temp_df, x='conso', labels={'conso': f'Consumption of city: {self.id}'})
         return fig
 
     def violin(self):
         """Plots the violin plot of the city over the available years"""
         temp_df = df[df['code'] == self.id]
-        fig = px.violin(temp_df, x='conso')
+        fig = px.violin(temp_df, x='conso', labels={'conso': f'Consumption of city: {self.id}'})
         return fig
 
     def bar(self):
         """Plots the bar plot of the city over the available years"""
         temp_df = df[df['code'] == self.id]
-        fig = px.bar(temp_df, x='annee', y='conso')
+        fig = px.bar(temp_df, x='annee', y='conso', labels={'conso': f'Consumption of city: {self.id}'})
         return fig
 
 
 # Interactive map
-# App layout
+
 app = Dash(__name__)
 
 cache = Cache(app.server, config={
@@ -99,48 +93,56 @@ cache = Cache(app.server, config={
 })
 CACHE_TIMEOUT = int(os.environ.get('DASH_CACHE_TIMEOUT', '60'))
 
-app.layout = html.Div([
+@cache.memoize(timeout=CACHE_TIMEOUT)
+def compute_map_data():
+    dff = df.copy()
+    dff = dff.groupby(['code', 'dept']).agg({'conso': 'mean', 'nom' : 'first'}).reset_index()
 
+    return dff
+
+
+# App layout
+app.layout = html.Div([
     html.H1("French electricity consumption", style={'text-align': 'center'}),
     # Control Panel
     html.Div([
-    dcc.Dropdown(id="slct_year",
-                 options=[
-                     {"label": "2018", "value": 2018},
-                     {"label": "2019", "value": 2019},
-                     {"label": "2020", "value": 2020},
-                     {"label": "2021", "value": 2021}],
-                 multi=False,
-                 value=2018,
-                 style={'width': "40%", 'display': 'inline-block'}
-                 ),
+        dcc.Dropdown(id="slct_year",
+                     options=[
+                         {"label": "2018", "value": 2018},
+                         {"label": "2019", "value": 2019},
+                         {"label": "2020", "value": 2020},
+                         {"label": "2021", "value": 2021}],
+                     multi=False,
+                     value=2018,
+                     style={'width': "40%"}
+                     ),
 
-    dcc.Dropdown(id="slct_plot_style",
-                 options=[
-                     {"label": "Violin", "value": 'violin'},
-                     # {"label": "KDE", "value": 'kde'},
-                     {"label": "Swarm", "value": 'swarm'},
-                     {"label": "Bar", "value": 'bar'}],
-                 multi=False,
-                 value='violin',
-                 style={'width': "40%", 'display': 'inline-block'}
-                 ),
+        dcc.Dropdown(id="slct_plot_style",
+                     options=[
+                         {"label": "Violin", "value": 'violin'},
+                         # {"label": "KDE", "value": 'kde'},
+                         {"label": "Swarm", "value": 'swarm'},
+                         {"label": "Bar", "value": 'bar'}],
+                     multi=False,
+                     value='violin',
+                     style={'width': "40%"}
+                     ),
+        html.Br(),
 
-    html.Br(),
-
-    # Visuals
-    html.Div(className="row", children=[
-        html.Div(className="seven columns pretty_container", children=[
-            dcc.Markdown(children='_Click on the map to show the city\'s consumption._'),
-            dcc.Graph(id='elec_map', style={'width': '50%', 'height': '50%', 'display': 'inline-block'})
+        # Visuals
+        html.Div(className="row", children=[
+            html.Div(className="seven columns pretty_container", children=[
+                dcc.Markdown(children='_Click on the map to show the city\'s consumption._'),
+                dcc.Graph(id='elec_map', style={'width': '49%', 'height': '49%'},
+                          clickData={'points': [{'customdata': '34172'}]})
+            ]),
+            html.Div(className="row2", children=[
+                dcc.Graph(id='plot', style={'width': '49%', 'height': '49%'}),
+            ]),
         ]),
-        html.Div(className="row2", children=[
-            dcc.Graph(id='plot', style={'width': '50%', 'height': '50%', 'display': 'inline-block'}),
-        ]),
-    ]),
-
     ]),
 ])
+
 
 # Connect plotly to Dash
 @app.callback(
@@ -150,8 +152,7 @@ app.layout = html.Div([
 def update_graph(option_slctd):
     print(option_slctd)
 
-    dff = df.copy()
-    dff = dff[dff["annee"] == option_slctd]
+    dff = compute_map_data()
 
     fig = px.choropleth_mapbox(dff,
                                geojson=cities,
@@ -160,7 +161,7 @@ def update_graph(option_slctd):
                                featureidkey="properties.code",
                                mapbox_style="carto-positron",
                                hover_data=['conso'],
-                               zoom=3.7,
+                               zoom=4,
                                center={"lat": 47, "lon": 2},
                                opacity=0.6,
                                )
@@ -174,12 +175,14 @@ def update_graph(option_slctd):
 
 @app.callback(
     Output(component_id='plot', component_property='figure'),
-    [Input(component_id='slct_plot_style', component_property='value')]
+    [Input(component_id='slct_plot_style', component_property='value'),
+     Input(component_id='elec_map', component_property='clickData')]
 )
-def update_plot(option_slctd):
-    print(option_slctd)
+def update_plot(option_slctd, clickData):
+    print(option_slctd, clickData)
 
-    code='34172'
+    code = '34172'
+    code = clickData['points'][0]['customdata']
 
     if option_slctd == 'violin':
         fig2 = City(code).violin()
