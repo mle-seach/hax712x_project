@@ -77,7 +77,7 @@ Toutes ces données ont été manipulées avec la bibliothèque ```pandas``` pr�
 Comme présenté lors dans l'introduction, cette partie a pour but de prédire la consommation d'électricité en France au jour du 08/12/2022.
 Nous avons fait le choix d'utiliser deux méthodes différentes de prédiction afin de pouvoir les comparer. 
 
-Pour la consommation d'électricité globale, nous avons utilisé le module ```prophet``` présent dans Python qui effectue des prévisions de séries temporelles basée sur un modèle additif .
+Pour la consommation d'électricité globale, nous avons utilisé le module ```prophet``` présent dans Python qui effectue des prévisions de séries temporelles basées sur un modèle additif .
 
 Pour la consommation des différentes sources d'énergie, nous avons utilisé la méthode de la moyenne empirique basée sur la loi des grands nombres. 
 
