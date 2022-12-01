@@ -133,11 +133,10 @@ app.layout = html.Div([
         html.Div(className="row", children=[
             html.Div(className="seven columns pretty_container", children=[
                 dcc.Markdown(children='_Click on the map to show the city\'s consumption._'),
-                dcc.Graph(id='elec_map', style={'width': '49%', 'height': '49%'},
-                          clickData={'points': [{'customdata': '34172'}]})
+                dcc.Graph(id='elec_map', clickData={'points': [{'customdata': '34172'}]})
             ]),
             html.Div(className="row2", children=[
-                dcc.Graph(id='plot', style={'width': '49%', 'height': '49%'}),
+                dcc.Graph(id='plot'),
             ]),
         ]),
     ]),
@@ -179,10 +178,10 @@ def update_graph(option_slctd):
      Input(component_id='elec_map', component_property='clickData')]
 )
 def update_plot(option_slctd, clickData):
-    print(option_slctd, clickData)
+    print(option_slctd, clickData['points'][0]['location'])
 
-    code = '34172'
-    code = clickData['points'][0]['customdata']
+    code = clickData['points'][0]['location']
+    print(type(code), code)
 
     if option_slctd == 'violin':
         fig2 = City(code).violin()
