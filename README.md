@@ -1,6 +1,8 @@
 # hax712x_project
 
-https://github.com/mle-seach/hax712x_project/blob/Prediction/data/tracteur_electrique.jpg
+<p align="center">
+  <img src="https://github.com/mle-seach/hax712x_project/blob/Prediction/data/tracteur_electrique.jpg" width=500 title="Tracteur">
+</p>
 
 ##  Introduction
 Ce  projet Python  possède deux buts principaux . 
