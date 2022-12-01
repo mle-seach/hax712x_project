@@ -26,7 +26,7 @@ Vous pouvez également constater que trackelec contient un autre jeu de mot, tra
 
 # Préparation de l'environnement de travail :
 
-Une partie de ce projet a été effectuée sur Jupyter Notebook , avant de pouvoir expérimenter notre code , vous devez d'abord vous assurer d'avoir un environnement de travail fonctionnel , (si celà est déja fait vous pouvez passer à la deuxième étape).
+Une partie de ce projet a été effectuée sur Jupyter Notebook , avant de pouvoir expérimenter notre code , vous devez d'abord vous assurer d'avoir un environnement de travail fonctionnel (si cela est déja fait vous pouvez passer à la deuxième étape).
 
 ## Première étape : 
 
