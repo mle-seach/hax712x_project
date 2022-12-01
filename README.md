@@ -18,6 +18,16 @@ Afin de répartir au mieux  le travail, nous avons fait le choix de ''créer deu
 Nous avons également Guillaume à qui nous avons attribué le rôle de consultant , car  de part son travail il ne peut pas s'investir réellement dans le projet.
 
 
+## Les données 
+
+Pour ce projet nous avons utilisé plusieurs jeux de données.
+
+- Pour la partie prédiction, vous pouvez retrouver les jeux de données aux adresses suivantes : https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B et  https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature&sort=-date_heure .
+
+- Pour la partie visualisation, vous pouvez retrouver le jeux de données à l'adresse suivante :  https://data.enedis.fr/explore/dataset/consommation-annuelle-residentielle-par-adresse/information/ . 
+
+Toutes ces données ont été manipulées avec la bibliothèque ```pandas``` présente sur Python afin de les nettoyer et d'en extraire seulement les informations nécessaires à notre travail. 
+
 ## Contact
 
 pauline.dusfourcastan@gmail.com
