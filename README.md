@@ -1,5 +1,7 @@
 # hax712x_project
 
+https://github.com/mle-seach/hax712x_project/blob/Prediction/data/tracteur_electrique.jpg
+
 ##  Introduction
 Ce  projet Python  possède deux buts principaux . 
 
