@@ -61,18 +61,25 @@ pip install -r requirements.txt
 pip install 
 ``` 
 
+# Les données 
 
+Pour ce projet nous avons utilisé plusieurs jeux de données.
+
+- Pour la partie prédiction, vous pouvez retrouver les jeux de données aux adresses suivantes : https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B et  https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/information/?disjunctive.nature&sort=-date_heure .
+
+- Pour la partie visualisation, vous pouvez retrouver le jeux de données à l'adresse suivante :  https://data.enedis.fr/explore/dataset/consommation-annuelle-residentielle-par-adresse/information/ . 
+
+Toutes ces données ont été manipulées avec la bibliothèque ```pandas``` présente sur Python afin de les nettoyer et d'en extraire seulement les informations nécessaires à notre travail.
 
 
 # Prédiction :
 
-Pour cette partie nous allons comparer deux méthodes de prédictions :
+Comme présenté lors dans l'introduction, cette partie a pour but de prédire la consommation d'électricité en France au jour du 08/12/2022.
+Nous avons fait le choix d'utiliser deux méthodes différentes de prédiction afin de pouvoir les comparer. 
 
-- Une qui s'appuie sur la moyenne empirique.
+Pour la consommation d'électricité globale, nous avons utilisé le module ```prophet``` présent dans Python qui se base sur les séries temporelles et le modèle ARIMA.
 
-- Une autre méthode qui s'appuie sur le modèle ARIMA (Auto Regressive Integrated Moving average). 
-
-
+Pour la consommation des différentes sources d'énergie, nous avons utilisé la méthode de la moyenne empirique basée sur la loi des grands nombres. 
 
 
 # Projet Mid-term :
