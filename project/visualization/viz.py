@@ -83,6 +83,12 @@ class City:
         return fig
 
 
+def hist(dept):
+    temp_df = df[df['dept'] == dept]
+    fig = px.bar(temp_df, x='nom', y='conso').update_xaxes(categoryorder="total descending")
+    return fig
+
+
 # Interactive map
 
 app = Dash(__name__)
@@ -93,10 +99,11 @@ cache = Cache(app.server, config={
 })
 CACHE_TIMEOUT = int(os.environ.get('DASH_CACHE_TIMEOUT', '60'))
 
+
 @cache.memoize(timeout=CACHE_TIMEOUT)
 def compute_map_data():
     dff = df.copy()
-    dff = dff.groupby(['code', 'dept']).agg({'conso': 'mean', 'nom' : 'first'}).reset_index()
+    dff = dff.groupby(['code', 'dept']).agg({'conso': 'mean', 'nom': 'first'}).reset_index()
 
     return dff
 
@@ -177,10 +184,10 @@ def update_graph(option_slctd):
     [Input(component_id='slct_plot_style', component_property='value'),
      Input(component_id='elec_map', component_property='clickData')]
 )
-def update_plot(option_slctd, clickData):
-    print(option_slctd, clickData['points'][0]['location'])
+def update_plot(option_slctd, clickdata):
+    print(option_slctd, clickdata['points'][0]['location'])
 
-    code = clickData['points'][0]['location']
+    code = clickdata['points'][0]['location']
     print(type(code), code)
 
     if option_slctd == 'violin':
