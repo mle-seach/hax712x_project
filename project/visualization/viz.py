@@ -162,24 +162,14 @@ app.layout = html.Div([
     ]),
     # Second control panel
     html.Div([
-        dcc.Dropdown(id="slct_reg",
-                     options=[
-                         {"label": "2018", "value": 2018},
-                         {"label": "2019", "value": 2019},
-                         {"label": "2020", "value": 2020},
-                         {"label": "2021", "value": 2021}],
+        dcc.Dropdown(list(regions.keys()),
+                     'Occitanie',
+                     id="slct_reg",
                      multi=False,
-                     value=2018,
                      style={'width': "40%"}
                      ),
 
         dcc.Dropdown(id="slct_dept",
-                     options=[
-                         {"label": "Vaucluse", "value": 84},
-                         {"label": "Hérault", "value": 34},
-                         {"label": "Bar", "value": 'bar'}],
-                     multi=False,
-                     value='Vaucluse',
                      style={'width': "40%"}
                      ),
         html.Br(),
@@ -243,6 +233,19 @@ def update_plot(option_slctd, clickdata):
 
     return fig2
 
+
+@app.callback(
+    Output('slct_dept', 'options'),
+    Input('slct_reg', 'value'))
+def set_dept_options(selected_region):
+    return [{'label': i, 'value': i} for i in regions[selected_region]]
+
+
+@app.callback(
+    Output('slct_dept', 'value'),
+    Input('slct_dept', 'options'))
+def set_dept_value(available_options):
+    return available_options[0]['value']
 
 @app.callback(
     Output(component_id='hist', component_property='figure'),
