@@ -89,8 +89,21 @@ def hist(dept):
     return fig
 
 
-# Interactive map
+regions = {'Auvergne-Rhône-Alpes': [1, 3, 7, 15, 26, 38, 42, 43, 63, 69, 73, 74],
+           'Bourgogne-Franche-Comté': [21, 25, 39, 58, 70, 71, 89, 90],
+           'Bretagne': [22, 29, 35, 56],
+           'Centre-Val de Loire': [18, 28, 36, 37, 41, 45],
+           'Corse': [20],
+           'Grand Est': [8, 10, 51, 52, 54, 55, 57, 67, 68, 88],
+           'Hauts-de-France': [2, 59, 60, 62, 80],
+           'Île-de-France': [75, 77, 78, 91, 92, 93, 94, 95],
+           'Normandie': [14, 27, 50, 61, 76],
+           'Nouvelle-Aquitaine': [16, 17, 19, 23, 24, 33, 40, 47, 64, 79, 86, 87],
+           'Occitanie': [9, 11, 12, 30, 31, 32, 34, 46, 48, 65, 66, 81, 82],
+           'Pays de la Loire': [44, 49, 53, 72, 85],
+           'Provence-Alpes-Côte d\'Azur': [4, 5, 6, 13, 83, 84]}
 
+# Interactive map
 app = Dash(__name__)
 
 cache = Cache(app.server, config={
@@ -102,6 +115,7 @@ CACHE_TIMEOUT = int(os.environ.get('DASH_CACHE_TIMEOUT', '60'))
 
 @cache.memoize(timeout=CACHE_TIMEOUT)
 def compute_map_data():
+    """Return the dataframe of the cities' consumption averaged over the four yers"""
     dff = df.copy()
     dff = dff.groupby(['code', 'dept']).agg({'conso': 'mean', 'nom': 'first'}).reset_index()
 
@@ -127,7 +141,6 @@ app.layout = html.Div([
         dcc.Dropdown(id="slct_plot_style",
                      options=[
                          {"label": "Violin", "value": 'violin'},
-                         # {"label": "KDE", "value": 'kde'},
                          {"label": "Swarm", "value": 'swarm'},
                          {"label": "Bar", "value": 'bar'}],
                      multi=False,
@@ -136,7 +149,7 @@ app.layout = html.Div([
                      ),
         html.Br(),
 
-        # Visuals
+        # First Visuals
         html.Div(className="row", children=[
             html.Div(className="seven columns pretty_container", children=[
                 dcc.Markdown(children='_Click on the map to show the city\'s consumption._'),
@@ -144,6 +157,37 @@ app.layout = html.Div([
             ]),
             html.Div(className="row2", children=[
                 dcc.Graph(id='plot'),
+            ]),
+        ]),
+    ]),
+    # Second control panel
+    html.Div([
+        dcc.Dropdown(id="slct_reg",
+                     options=[
+                         {"label": "2018", "value": 2018},
+                         {"label": "2019", "value": 2019},
+                         {"label": "2020", "value": 2020},
+                         {"label": "2021", "value": 2021}],
+                     multi=False,
+                     value=2018,
+                     style={'width': "40%"}
+                     ),
+
+        dcc.Dropdown(id="slct_dept",
+                     options=[
+                         {"label": "Vaucluse", "value": 84},
+                         {"label": "Hérault", "value": 34},
+                         {"label": "Bar", "value": 'bar'}],
+                     multi=False,
+                     value='Vaucluse',
+                     style={'width': "40%"}
+                     ),
+        html.Br(),
+
+        # Second Visuals Histogram
+        html.Div(className="row", children=[
+            html.Div(className="row2", children=[
+                dcc.Graph(id='hist'),
             ]),
         ]),
     ]),
@@ -199,6 +243,18 @@ def update_plot(option_slctd, clickdata):
 
     return fig2
 
+
+@app.callback(
+    Output(component_id='hist', component_property='figure'),
+    [Input(component_id='slct_reg', component_property='value'),
+     Input(component_id='slct_dept', component_property='value')]
+)
+def update_hist(reg_slctd, slct_dept):
+    print(reg_slctd, slct_dept)
+
+    fig3 = hist(slct_dept)
+
+    return fig3
 
 if __name__ == '__main__':
     app.run_server(debug=True)
