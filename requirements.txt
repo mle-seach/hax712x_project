@@ -9,3 +9,4 @@ seaborn==0.11.2
 datetime==4.7
 pmdarima==2.0.1
 prophet==1.1.1
+dash==2.7.0
