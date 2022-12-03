@@ -10,7 +10,7 @@ from dash import Dash, dcc, html, Input, Output
 
 # Downloading data
 url = 'https://data.enedis.fr/explore/dataset/consommation-annuelle-residentielle-par-adresse/download'
-data_path = os.path.join(os.getcwd(), 'data_viz.csv')
+data_path = 'data_viz.csv'
 path = download(url, data_path, progressbar=True, verbose=True)
 
 # Dataframe creation, keeping only useful columns
@@ -29,7 +29,6 @@ df.fillna('Florange', inplace=True)
 # Converting city names to lower case to avoid case errors
 df['nom'] = df['nom'].str.lower()
 
-# TODO fix geojson paths
 city_path = '../../data/communes.json'
 dept_path = '../../data/dept.geojson'
 cities = json.load(open(city_path, 'r'))
@@ -38,26 +37,6 @@ cities = json.load(open(city_path, 'r'))
 
 
 # Plots and max/min
-def max_conso(dept, year=2018):
-    """Get the city with maximum consumption of the dept on the given year
-    and return city name and its conso"""
-    temp_df = df[df['annee'] == year]
-    temp_df = temp_df[temp_df['dept'] == dept]
-    row = temp_df[temp_df['conso'] == temp_df['conso'].max()]
-
-    return row.iloc[0]['nom'], row.iloc[0]['conso']
-
-
-def min_conso(dept, year=2018):
-    """Get the city with minimum consumption of the dept on the given year
-    and return city, conso"""
-    temp_df = df[df['annee'] == year]
-    temp_df = temp_df[temp_df['dept'] == dept]
-    row = temp_df[temp_df['conso'] == temp_df['conso'].min()]
-
-    return row.iloc[0]['nom'], row.iloc[0]['conso']
-
-
 class City:
     def __init__(self, id):
         """Constructor of City objects.
@@ -195,6 +174,7 @@ depts = {
     95: 'Val-d\'Oise',
 }
 
+
 def label(i):
     """Name of dept given i, the dept code"""
     name = depts[i]
@@ -204,15 +184,16 @@ def label(i):
 def hist(dept):
     """Histogram of the cities' consumption in the dept or region"""
     # Region
+    dff = compute_map_data()
     if dept in list(regions.keys()):
-        final_df = df[df['dept'] == regions[dept][0]]
+        final_df = dff[dff['dept'] == regions[dept][0]]
         for i in regions[dept][1:]:
-            temp_df = df[df['dept'] == i]
+            temp_df = dff[dff['dept'] == i]
             final_df = pd.concat([temp_df, final_df])
         fig = px.bar(final_df, x='nom', y='conso').update_xaxes(categoryorder="total descending")
     # Dept
     else:
-        temp_df = df[df['dept'] == dept]
+        temp_df = dff[dff['dept'] == dept]
         fig = px.bar(temp_df, x='nom', y='conso').update_xaxes(categoryorder="total descending")
     return fig
 
@@ -234,6 +215,42 @@ def compute_map_data():
     dff = dff.groupby(['code', 'dept']).agg({'conso': 'mean', 'nom': 'first'}).reset_index()
 
     return dff
+
+
+def max_conso(dept):
+    """Get the city with maximum consumption of the dept/region
+    and return city name and its conso"""
+    dff = compute_map_data()
+    if dept in list(regions.keys()):
+        final_df = dff[dff['dept'] == regions[dept][0]]
+        for i in regions[dept][1:]:
+            temp_df = dff[dff['dept'] == i]
+            final_df = pd.concat([temp_df, final_df])
+        row = final_df[final_df['conso'] == final_df['conso'].max()]
+    else:
+        temp_df = compute_map_data()
+        temp_df = temp_df[temp_df['dept'] == dept]
+        row = temp_df[temp_df['conso'] == temp_df['conso'].max()]
+
+    return row.iloc[0]['nom'], round(row.iloc[0]['conso'], 3)
+
+
+def min_conso(dept):
+    """Get the city with minimum consumption of the dept/region
+    and return city, conso"""
+    dff = compute_map_data()
+    if dept in list(regions.keys()):
+        final_df = dff[dff['dept'] == regions[dept][0]]
+        for i in regions[dept][1:]:
+            temp_df = dff[dff['dept'] == i]
+            final_df = pd.concat([temp_df, final_df])
+        row = final_df[final_df['conso'] == final_df['conso'].min()]
+    else:
+        temp_df = compute_map_data()
+        temp_df = temp_df[temp_df['dept'] == dept]
+        row = temp_df[temp_df['conso'] == temp_df['conso'].min()]
+
+    return row.iloc[0]['nom'], round(row.iloc[0]['conso'], 3)
 
 
 # App layout
@@ -289,6 +306,7 @@ app.layout = html.Div([
         html.Br(),
 
         # Second Visuals Histogram
+        html.Div(id='output_container', children=[]),
         html.Div(className="row", children=[
             html.Div(className="row2", children=[
                 dcc.Graph(id='hist'),
@@ -368,7 +386,8 @@ def set_dept_value(available_options):
 
 # Histogram
 @app.callback(
-    Output(component_id='hist', component_property='figure'),
+    [Output(component_id='output_container', component_property='children'),
+     Output(component_id='hist', component_property='figure')],
     [Input(component_id='slct_reg', component_property='value'),
      Input(component_id='slct_dept', component_property='value')]
 )
@@ -377,10 +396,14 @@ def update_hist(reg_slctd, slct_dept):
 
     if slct_dept is None:
         fig3 = hist(reg_slctd)
+        container = f"The city with the maximum consumption is: {max_conso(reg_slctd)} \n" \
+                    f"The city with the minimum consumption is: {min_conso(reg_slctd)}"
     else:
         fig3 = hist(slct_dept)
+        container = f"The city with the maximum consumption is: {max_conso(slct_dept)} \n" \
+                    f"The city with the minimum consumption is: {min_conso(slct_dept)}"
 
-    return fig3
+    return container, fig3
 
 
 if __name__ == '__main__':
