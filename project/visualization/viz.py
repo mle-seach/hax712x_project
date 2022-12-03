@@ -30,7 +30,7 @@ df.fillna('Florange', inplace=True)
 df['nom'] = df['nom'].str.lower()
 
 # TODO fix geojson paths
-city_path = '../../data/communes2.json'
+city_path = '../../data/communes.json'
 dept_path = '../../data/dept.geojson'
 cities = json.load(open(city_path, 'r'))
 
@@ -342,9 +342,9 @@ def update_plot(option_slctd, clickdata):
 
     if option_slctd == 'violin':
         fig2 = City(code).violin()
-    if option_slctd == 'swarm':
+    elif option_slctd == 'swarm':
         fig2 = City(code).swarm()
-    if option_slctd == 'bar':
+    elif option_slctd == 'bar':
         fig2 = City(code).bar()
 
     return fig2
