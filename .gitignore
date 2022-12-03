@@ -1,4 +1,7 @@
-__pycache__
+__pycache__*
 .vscode/
 .idea/
-Trackelec/visu/cache-directory/
+trackelec/visu/cache-directory/
+build*
+dist*
+*.egg-info
