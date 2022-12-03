@@ -1,5 +1,5 @@
 from setuptools import setup
-from Trackelec import __version__ as current_version
+from trackelec import __version__ as current_version
 
 setup(
     name="trackelec",
