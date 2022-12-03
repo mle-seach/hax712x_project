@@ -83,12 +83,6 @@ class City:
         return fig
 
 
-def hist(dept):
-    temp_df = df[df['dept'] == dept]
-    fig = px.bar(temp_df, x='nom', y='conso').update_xaxes(categoryorder="total descending")
-    return fig
-
-
 regions = {'Auvergne-Rhône-Alpes': [1, 3, 7, 15, 26, 38, 42, 43, 63, 69, 73, 74],
            'Bourgogne-Franche-Comté': [21, 25, 39, 58, 70, 71, 89, 90],
            'Bretagne': [22, 29, 35, 56],
@@ -103,6 +97,22 @@ regions = {'Auvergne-Rhône-Alpes': [1, 3, 7, 15, 26, 38, 42, 43, 63, 69, 73, 74
            'Pays de la Loire': [44, 49, 53, 72, 85],
            'Provence-Alpes-Côte d\'Azur': [4, 5, 6, 13, 83, 84]}
 
+
+def hist(dept):
+    """Histogram of the cities' consumption in the dept or region"""
+    if dept in list(regions.keys()):
+        # TODO fix region selection
+        final_df = df[df['dept'] == regions[dept][0]]
+        for i in regions[dept][1:]:
+            temp_df = df[df['dept'] == i]
+            final_df = pd.concat([temp_df, final_df])
+        fig = px.bar(final_df, x='nom', y='conso').update_xaxes(categoryorder="total descending")
+    else:
+        temp_df = df[df['dept'] == dept]
+        fig = px.bar(temp_df, x='nom', y='conso').update_xaxes(categoryorder="total descending")
+    return fig
+
+
 # Interactive map
 app = Dash(__name__)
 
@@ -115,7 +125,7 @@ CACHE_TIMEOUT = int(os.environ.get('DASH_CACHE_TIMEOUT', '60'))
 
 @cache.memoize(timeout=CACHE_TIMEOUT)
 def compute_map_data():
-    """Return the dataframe of the cities' consumption averaged over the four yers"""
+    """Return the dataframe of the cities' consumption averaged over the four years"""
     dff = df.copy()
     dff = dff.groupby(['code', 'dept']).agg({'conso': 'mean', 'nom': 'first'}).reset_index()
 
@@ -184,7 +194,7 @@ app.layout = html.Div([
 ])
 
 
-# Connect plotly to Dash
+# Map
 @app.callback(
     Output(component_id='elec_map', component_property='figure'),
     [Input(component_id='slct_year', component_property='value')]
@@ -207,12 +217,14 @@ def update_graph(option_slctd):
                                )
 
     hovertemplate = '<br>City code: %{location}' \
-                    '<br>Conso: %{customdata:.3s} MWh/hb'
+                    '<br>Conso: %{customdata:.3s} MWh/hb' \
+                    '<br>City name: %{customdata:.3s} MWh/hb'
     fig.data[0]['hovertemplate'] = hovertemplate
 
     return fig
 
 
+# Violin/Swarm/Bar
 @app.callback(
     Output(component_id='plot', component_property='figure'),
     [Input(component_id='slct_plot_style', component_property='value'),
@@ -234,19 +246,24 @@ def update_plot(option_slctd, clickdata):
     return fig2
 
 
+# Dropdown of regions
 @app.callback(
     Output('slct_dept', 'options'),
     Input('slct_reg', 'value'))
 def set_dept_options(selected_region):
+    # TODO Change label to dept name
     return [{'label': i, 'value': i} for i in regions[selected_region]]
 
 
+# Dropdown of depts
 @app.callback(
     Output('slct_dept', 'value'),
     Input('slct_dept', 'options'))
 def set_dept_value(available_options):
     return available_options[0]['value']
 
+
+# Histogram
 @app.callback(
     Output(component_id='hist', component_property='figure'),
     [Input(component_id='slct_reg', component_property='value'),
@@ -255,9 +272,13 @@ def set_dept_value(available_options):
 def update_hist(reg_slctd, slct_dept):
     print(reg_slctd, slct_dept)
 
-    fig3 = hist(slct_dept)
+    if slct_dept is None:
+        fig3 = hist(reg_slctd)
+    else:
+        fig3 = hist(slct_dept)
 
     return fig3
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
