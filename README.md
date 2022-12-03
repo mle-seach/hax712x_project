@@ -96,7 +96,7 @@ Dans la partie prédiction, Sarah et Pauline travaillent en collaboration cepend
 Pauline Dusfour-Castan : pauline.dusfourcastan@gmail.com
 
 
-Thibault Ferretti : thibaultferretti@gmail.com
+Thibault Ferretti : thibault.ferretti@etu.umontpellier.fr
 
 
 Sarah Matoub : sarah19mtb@gmail.com
