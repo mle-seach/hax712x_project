@@ -58,7 +58,7 @@ pip install -r requirements.txt
 - Après avoir effectué toutes ces manipulations , vous pouvez enfin installer notre module `trackelec` via la commande suivante :
 
 ```bash
-pip install 
+pip install -i https://test.pypi.org/simple/ trackelec
 ``` 
 
 # Les données 
