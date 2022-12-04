@@ -79,7 +79,7 @@ Nous avons fait le choix d'utiliser deux méthodes différentes de prédiction a
 
 Pour la consommation d'électricité globale, nous avons utilisé le module ```prophet``` présent dans Python qui effectue des prévisions de séries temporelles basées sur un modèle additif .
 
-Pour la consommation des différentes sources d'énergie, nous avons utilisé la méthode de la moyenne empirique basée sur la loi des grands nombres. 
+Pour la consommation des différentes sources d'énergie, nous avons utilisé la méthode de la moyenne empirique et la méthode Prophet. 
 
 
 # Projet Mid-term :
