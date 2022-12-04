@@ -3,7 +3,7 @@ import os
 from download import download
 import pandas as pd
 import plotly.express as px
-import json
+import urllib, json
 from flask_caching import Cache
 from dash import Dash, dcc, html, Input, Output
 
@@ -34,10 +34,11 @@ df.fillna("Florange", inplace=True)
 # Converting city names to lower case to avoid case errors
 df["nom"] = df["nom"].str.lower()
 
-city_path = "../../data/communes.json"
+city_path = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/communes.geojson" #"../../data/communes.json"
 dept_path = "../../data/dept.geojson"
-cities = json.load(open(city_path, "r"))
-
+# cities = json.load(open(city_path, "r"))
+with urllib.request.urlopen("https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/communes.geojson") as url:
+    cities = json.load(url)
 # TODO map by dept
 
 
@@ -283,30 +284,6 @@ app.layout = html.Div(
         # Control Panel
         html.Div(
             [
-                dcc.Dropdown(
-                    id="slct_year",
-                    options=[
-                        {"label": "2018", "value": 2018},
-                        {"label": "2019", "value": 2019},
-                        {"label": "2020", "value": 2020},
-                        {"label": "2021", "value": 2021},
-                    ],
-                    multi=False,
-                    value=2018,
-                    style={"width": "40%"},
-                ),
-                dcc.Dropdown(
-                    id="slct_plot_style",
-                    options=[
-                        {"label": "Violin", "value": "violin"},
-                        {"label": "Swarm", "value": "swarm"},
-                        {"label": "Bar", "value": "bar"},
-                    ],
-                    multi=False,
-                    value="violin",
-                    style={"width": "40%"},
-                ),
-                html.Br(),
                 # First Visuals
                 html.Div(
                     className="row",
@@ -322,6 +299,17 @@ app.layout = html.Div(
                                     clickData={"points": [{"customdata": "34172"}]},
                                 ),
                             ],
+                        ),
+                        dcc.Dropdown(
+                            id="slct_plot_style",
+                            options=[
+                                {"label": "Violin", "value": "violin"},
+                                {"label": "Swarm", "value": "swarm"},
+                                {"label": "Bar", "value": "bar"},
+                            ],
+                            multi=False,
+                            value="violin",
+                            style={"width": "40%"},
                         ),
                         html.Div(
                             className="row2",
@@ -367,10 +355,10 @@ app.layout = html.Div(
 # Map
 @app.callback(
     Output(component_id="elec_map", component_property="figure"),
-    [Input(component_id="slct_year", component_property="value")],
+    [Input(component_id="elec_map", component_property="clickData")],
 )
-def update_graph(option_slctd):
-    print(option_slctd)
+def update_graph(clickData):
+    print(clickData)
 
     dff = compute_map_data()
 
