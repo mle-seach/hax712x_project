@@ -40,7 +40,7 @@ Pour l'affichage graphique de la consommation de Gaz, nous avons obtenu le résu
     plt.title('Prédiction conso en MW le 08/12/22')
     plt.legend()
 
-.. image:: Images/gaz1.png 
+.. image:: Images/gaz1.png
     :scale: 50%
     :align: center
 
@@ -54,7 +54,7 @@ Ce qui nous donne les données suivantes :
 
 Pour la comparaison des deux méthodes nous obtenons le graphique suivant :
 
-.. image:: Images/gaz3.png 
+.. image:: Images/gaz3.png
     :scale: 50%
     :align: center 
 

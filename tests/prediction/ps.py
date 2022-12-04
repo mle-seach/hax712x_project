@@ -2,7 +2,6 @@ import pandas as pd
 import pooch
 import os
 
-
 url = "https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B"
 path_target = "./consommation3.csv"
 path, fname = os.path.split(path_target)

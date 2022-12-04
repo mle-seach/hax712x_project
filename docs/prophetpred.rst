@@ -52,7 +52,7 @@ La deuxième colonne doit porter le nom de *y* et contenir ce que l'on veut pré
 
 Voici un apreçu de nos données :
 
-.. image:: Images/df2.png 
+.. image:: Images/df2.png
     :scale: 65%
     :align: center
 \
@@ -79,7 +79,7 @@ Cette méthode va attribuer à chaque ligne du dataframe *forecast* une valeur p
 
 Après avoir sélectionné les colonnes *ds* et *yhat* du nouveau dataframe nous obtenons:
 
-.. image:: Images/predic.png 
+.. image:: Images/predic.png
     :scale: 65%
     :align: center
 \
@@ -92,7 +92,7 @@ Finalement , nous allons sélectionné les les lignes qui nous intéressent (cel
 
 Nous obtenons le dataframe suivant :
 
-.. image:: Images/predic_finale.png 
+.. image:: Images/predic_finale.png
     :scale: 65%
     :align: center
 

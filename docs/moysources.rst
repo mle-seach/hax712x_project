@@ -21,13 +21,13 @@ Après ça, nous avons simplement calculé la moyenne selon les dates et affich�
 Exemple de résultats obtenus :
 -------------------------------
 
-Ci-dessous, vous pouvez voir un exemple des résultats obtenus avec notre programme : 
+Ci-dessous, vous pouvez voir un exemple des résultats obtenus avec notre programme :
 
 .. image:: Images/moy1.png
     :scale: 50%
-    :align: center 
+    :align: center
 
-Ce graphique représente la consommation moyenne en Charbon et en Fioul en France depuis 2012. 
+Ce graphique représente la consommation moyenne en Charbon et en Fioul en France depuis 2012.
 
 
 Documentation de quelques commandes

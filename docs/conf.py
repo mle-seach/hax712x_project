@@ -12,10 +12,9 @@
 #
 import os
 import sys
-
-sys.path.insert(0, os.path.abspath("/Users/Pauline/Desktop/essai/source"))
 import sphinx_rtd_theme
 
+sys.path.insert(0, os.path.abspath("/Users/Pauline/Desktop/essai/source"))
 
 # -- Project information -----------------------------------------------------
 
