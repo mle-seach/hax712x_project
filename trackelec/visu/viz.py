@@ -288,17 +288,14 @@ def compute_map_data():
 
 
 # Map by department
-
-name_list = ["" for _ in range(1, 97)]
-code_list = [str(i) if i >= 10 else "0" + str(i) for i in range(1, 97)]
-
-dico = {"code": [], "conso": []}
+name_list = [label(i) for i in range(1, 96)]
+code_list = [str(i) if i >= 10 else "0" + str(i) for i in range(1, 96)]
 
 code_avg_dept = list(compute_map_data()["code"])
 conso_avg_dept = list(compute_map_data()["conso"])
 
-init_list_conso = [0 for _ in range(96)]
-index_count = [0 for _ in range(96)]
+init_list_conso = [0 for _ in range(1,96)]
+index_count = [0 for _ in range(1,96)]
 
 for i in range(len(conso_avg_dept)):
     if str(code_avg_dept[i]):
@@ -306,7 +303,7 @@ for i in range(len(conso_avg_dept)):
         index_count[index - 1] += 1
         init_list_conso[index - 1] += conso_avg_dept[i]
 
-avg_conso = [0 for _ in range(96)]
+avg_conso = [0 for _ in range(1,96)]
 
 for i in range(len(avg_conso)):
     if index_count[i] != 0:
@@ -321,12 +318,19 @@ elec_map_fig = px.choropleth_mapbox(
     df2,
     geojson=dept,
     color=df2.conso,
-    locations=df2.code,
-    featureidkey="properties.code",
+    locations=df2.nom,
+    featureidkey="properties.nom",
+    hover_data=["conso"],
     center={"lat": 47, "lon": 2},
     mapbox_style="carto-positron",
     zoom=4.8,
 )
+
+hovertemplate = (
+    "<br>Department: %{location}"
+    "<br>Consumption: %{customdata:.3s} MWh/hb"
+)
+elec_map_fig.data[0]["hovertemplate"] = hovertemplate
 
 # App layout
 app.layout = html.Div(
@@ -348,7 +352,7 @@ app.layout = html.Div(
                                     className="row",
                                     children=[
                                         html.Div(
-                                            className="seven columns pretty_container",
+                                            className="two columns container",
                                             children=[
                                                 dcc.Markdown(
                                                     children="_Click on the map to show the city's consumption._"
@@ -469,14 +473,16 @@ def update_graph(clickdata):
         locations="code",
         featureidkey="properties.code",
         mapbox_style="carto-positron",
-        hover_data=["conso"],
+        hover_data=["conso", "nom"],
         zoom=4,
         center={"lat": 47, "lon": 2},
         opacity=0.6,
     )
 
     hovertemplate = (
-        "<br>City code: %{location}" "<br>Conso: %{customdata:.3s} MWh/hb"
+        "<br>City name: %{customdata[1]}"
+        "<br>City code: %{location}"
+        "<br>Consumption: %{customdata[0]:.3s} MWh/hb"
     )
     fig.data[0]["hovertemplate"] = hovertemplate
 
