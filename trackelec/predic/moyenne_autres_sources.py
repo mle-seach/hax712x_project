@@ -6,10 +6,8 @@ Created on Wed Nov  9 20:06:02 2022
 import pandas as pd
 import matplotlib.pyplot as plt
 import pylab
-import numpy as np
 import pooch
 import os
-from datetime import datetime
 
 # Paramètres d'affichage
 pylab.style.use("fivethirtyeight")

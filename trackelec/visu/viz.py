@@ -294,8 +294,8 @@ code_list = [str(i) if i >= 10 else "0" + str(i) for i in range(1, 96)]
 code_avg_dept = list(compute_map_data()["code"])
 conso_avg_dept = list(compute_map_data()["conso"])
 
-init_list_conso = [0 for _ in range(1,96)]
-index_count = [0 for _ in range(1,96)]
+init_list_conso = [0 for _ in range(1, 96)]
+index_count = [0 for _ in range(1, 96)]
 
 for i in range(len(conso_avg_dept)):
     if str(code_avg_dept[i]):
@@ -303,7 +303,7 @@ for i in range(len(conso_avg_dept)):
         index_count[index - 1] += 1
         init_list_conso[index - 1] += conso_avg_dept[i]
 
-avg_conso = [0 for _ in range(1,96)]
+avg_conso = [0 for _ in range(1, 96)]
 
 for i in range(len(avg_conso)):
     if index_count[i] != 0:
@@ -327,8 +327,7 @@ elec_map_fig = px.choropleth_mapbox(
 )
 
 hovertemplate = (
-    "<br>Department: %{location}"
-    "<br>Consumption: %{customdata:.3s} MWh/hb"
+    "<br>Department: %{location}" "<br>Consumption: %{customdata:.3s} MWh/hb"
 )
 elec_map_fig.data[0]["hovertemplate"] = hovertemplate
 
@@ -341,6 +340,55 @@ app.layout = html.Div(
         dcc.Tabs(
             id="tab",
             children=[
+                dcc.Tab(
+                    label="Consumption by department",
+                    children=[
+                        html.Div(
+                            className="seven columns pretty_container",
+                            children=[
+                                dcc.Graph(
+                                    id="elec_map_dept",
+                                    figure=elec_map_fig,
+                                    style={
+                                        "width": "90vh",
+                                        "height": "90vh",
+                                        "margin-left": "25%",
+                                        "margin_right": "25%",
+                                    },
+                                ),
+                            ],
+                        ),
+                        # Control panel
+                        html.Div(
+                            [
+                                dcc.Dropdown(
+                                    list(regions.keys()),
+                                    "Occitanie",
+                                    id="slct_reg",
+                                    multi=False,
+                                    style={"width": "40%"},
+                                ),
+                                dcc.Dropdown(
+                                    id="slct_dept", style={"width": "40%"}
+                                ),
+                                html.Br(),
+                                # Second Visuals Histogram
+                                html.Div(id="output_container", children=[]),
+                                html.Div(
+                                    className="row",
+                                    children=[
+                                        html.Div(
+                                            className="row2",
+                                            children=[
+                                                dcc.Graph(id="hist"),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ]
+                        ),
+                    ],
+                ),
                 dcc.Tab(
                     label="Consumption by city",
                     children=[
@@ -355,7 +403,10 @@ app.layout = html.Div(
                                             className="two columns container",
                                             children=[
                                                 dcc.Markdown(
-                                                    children="_Click on the map to show the city's consumption._"
+                                                    children="_Click on the map"
+                                                    " to show the "
+                                                    "city's "
+                                                    "consumption._"
                                                 ),
                                                 dcc.Graph(
                                                     id="elec_map",
@@ -399,55 +450,6 @@ app.layout = html.Div(
                                 ),
                             ]
                         ),
-                        # Control panel
-                        html.Div(
-                            [
-                                dcc.Dropdown(
-                                    list(regions.keys()),
-                                    "Occitanie",
-                                    id="slct_reg",
-                                    multi=False,
-                                    style={"width": "40%"},
-                                ),
-                                dcc.Dropdown(
-                                    id="slct_dept", style={"width": "40%"}
-                                ),
-                                html.Br(),
-                                # Second Visuals Histogram
-                                html.Div(id="output_container", children=[]),
-                                html.Div(
-                                    className="row",
-                                    children=[
-                                        html.Div(
-                                            className="row2",
-                                            children=[
-                                                dcc.Graph(id="hist"),
-                                            ],
-                                        ),
-                                    ],
-                                ),
-                            ]
-                        ),
-                    ],
-                ),
-                dcc.Tab(
-                    label="Consumption by department",
-                    children=[
-                        html.Div(
-                            className="seven columns pretty_container",
-                            children=[
-                                dcc.Graph(
-                                    id="elec_map_dept",
-                                    figure=elec_map_fig,
-                                    style={
-                                        "width": "90vh",
-                                        "height": "90vh",
-                                        "margin-left": "25%",
-                                        "margin_right": "25%",
-                                    },
-                                ),
-                            ],
-                        )
                     ],
                 ),
             ],

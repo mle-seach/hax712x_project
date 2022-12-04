@@ -1,7 +1,4 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import pylab
-import numpy as np
 import pooch
 import os
 

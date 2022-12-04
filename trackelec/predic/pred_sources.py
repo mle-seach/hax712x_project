@@ -53,7 +53,7 @@ data = cons.loc[
 # print(data)
 
 
-## Etude du Gaz ##
+# Etude du Gaz ##
 data1 = data[["Heure", "Gaz (MW)"]]
 data1.dropna(inplace=True)
 data1 = data1.sort_values(by="Heure", ascending=True)
@@ -70,7 +70,7 @@ df_gaz = moy1.to_frame()
 # print('Estimation consommation de Gaz=',df_gaz)
 
 
-## Etude du Fioul ##
+# Etude du Fioul
 data2 = data[["Heure", "Fioul (MW)"]]
 data2.dropna(inplace=True)
 data2 = data2.sort_values(by="Heure", ascending=True)
@@ -87,7 +87,7 @@ df_fioul = moy2.to_frame()
 # print('Estimation consommation de Fioul=',df_fioul)
 
 
-## Etude du Charbon ##
+# Etude du Charbon
 data3 = data[["Heure", "Charbon (MW)"]]
 data3.dropna(inplace=True)
 data3 = data3.sort_values(by="Heure", ascending=True)
@@ -104,7 +104,7 @@ df_charbon = moy3.to_frame()
 # print('Estimation consommation de Charbon=',df_charbon)
 
 
-## Etude du Nucléaire ##
+# Etude du Nucléaire
 data4 = data[["Heure", "Nucléaire (MW)"]]
 data4.dropna(inplace=True)
 data4 = data4.sort_values(by="Heure", ascending=True)
@@ -121,7 +121,7 @@ df_nucleaire = moy4.to_frame()
 # print('Estimation consommation de Nucléaire=',df_nucleaire)
 
 
-## Etude de l'Eolien, de l'Hydraulique et du Solaire ##
+# Etude de l'Eolien, de l'Hydraulique et du Solaire
 data5 = data[["Heure", "Eolien (MW)", "Hydraulique (MW)", "Solaire (MW)"]]
 data5.dropna(inplace=True)
 data5 = data5.sort_values(by="Heure", ascending=True)
@@ -148,9 +148,9 @@ df_solaire = moy53.to_frame()
 # print('Estimation consommation Solaire=',df_solaire)
 
 
-#### Comparaison avec le module Prophet ####
+# Comparaison avec le module Prophet #
 
-# Téléchargement des données de 2022:
+# Téléchargement des données de 2022 :
 url2 = "https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/download/?format=csv&disjunctive.nature=true&q=date_heure:%5B2022-05-31T22:00:00Z+TO+2022-11-29T22:59:59Z%5D&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B"
 path_target = "./consommation_2022.csv"
 path, fname = os.path.split(path_target)
@@ -165,6 +165,7 @@ data1 = pd.read_csv(
     parse_dates=["Date"],
     converters={"heure": str},
 )
+
 
 # Fonctions pour calculer la différence et la moyenne
 def x(a, b):
@@ -189,7 +190,7 @@ f2 = model2.make_future_dataframe(
 )
 predic1 = model2.predict(f2)
 s = predic1[["ds", "yhat"]]
-predic_finale1 = s[len(s) - 49 : 479]
+predic_finale1 = s[len(s) - 49: 479]
 predic_finale1 = predic_finale1.rename(
     columns={"ds": "Date et Heure", "yhat": "Gaz(MW)"}
 )
@@ -236,7 +237,7 @@ idee2.plot(x="Heure")
 plt.title("Comparaison prediction Gaz")
 
 
-## Etude du Fioul
+# Etude du Fioul
 df2 = data1.copy()
 df2 = data1[["Date", "Heure", "Fioul (MW)"]]
 df2 = df2.rename(columns={"Date": "ds", "Fioul (MW)": "y"})
@@ -250,7 +251,7 @@ f = model1.make_future_dataframe(
 )
 predic = model1.predict(f)
 s = predic[["ds", "yhat"]]
-predic_finale = s[len(s) - 49 : 479]
+predic_finale = s[len(s) - 49: 479]
 predic_finale = predic_finale.rename(
     columns={"ds": "Date et Heure", "yhat": "Fioul(MW)"}
 )
@@ -310,7 +311,7 @@ f3 = model3.make_future_dataframe(
 )
 predic2 = model3.predict(f3)
 s = predic2[["ds", "yhat"]]
-predic_finale2 = s[len(s) - 49 : 479]
+predic_finale2 = s[len(s) - 49: 479]
 predic_finale2 = predic_finale2.rename(
     columns={"ds": "Date et Heure", "yhat": "Hydraulique(MW)"}
 )
@@ -374,7 +375,7 @@ f4 = model4.make_future_dataframe(
 )
 predic3 = model4.predict(f4)
 s = predic3[["ds", "yhat"]]
-predic_finale3 = s[len(s) - 49 : 479]
+predic_finale3 = s[len(s) - 49: 479]
 predic_finale3 = predic_finale3.rename(
     columns={"ds": "Date et Heure", "yhat": "Nucleaire(MW)"}
 )
