@@ -27,7 +27,9 @@ df = df.rename(
     }
 )
 # Adding 0 at the start of the city code if in one of the first 9 dept
-df["code"] = df["code"].apply(lambda id: str(id) if id > 9999 else "0" + str(id))
+df["code"] = df["code"].apply(
+    lambda id: str(id) if id > 9999 else "0" + str(id)
+)
 # Dept for each city, delete last 3 digits of the code
 df["dept"] = df["code"].apply(lambda x: int(str(x)[:-3]))
 # Only one NaN, replacing with the appropriate city name, Florange
@@ -55,7 +57,9 @@ class City:
         """Plots the swarm plot of the city over the available years"""
         temp_df = df[df["code"] == self.id]
         fig = px.strip(
-            temp_df, x="conso", labels={"conso": f"Consumption of city: {self.id}"}
+            temp_df,
+            x="conso",
+            labels={"conso": f"Consumption of city: {self.id}"},
         )
         return fig
 
@@ -63,7 +67,9 @@ class City:
         """Plots the violin plot of the city over the available years"""
         temp_df = df[df["code"] == self.id]
         fig = px.violin(
-            temp_df, x="conso", labels={"conso": f"Consumption of city: {self.id}"}
+            temp_df,
+            x="conso",
+            labels={"conso": f"Consumption of city: {self.id}"},
         )
         return fig
 
@@ -261,14 +267,16 @@ def min_conso(dept):
 app = Dash(__name__)
 
 cache = Cache(
-    app.server, config={"CACHE_TYPE": "filesystem", "CACHE_DIR": "cache-directory"}
+    app.server,
+    config={"CACHE_TYPE": "filesystem", "CACHE_DIR": "cache-directory"},
 )
 CACHE_TIMEOUT = int(os.environ.get("DASH_CACHE_TIMEOUT", "60"))
 
 
 @cache.memoize(timeout=CACHE_TIMEOUT)
 def compute_map_data():
-    """Return the dataframe of the cities' consumption averaged over the four years"""
+    """Return the dataframe of the cities' consumption
+    averaged over the four years"""
     dff = df.copy()
     dff = (
         dff.groupby(["code", "dept"])
@@ -315,15 +323,17 @@ elec_map_fig = px.choropleth_mapbox(
     color=df2.conso,
     locations=df2.code,
     featureidkey="properties.code",
-    center={"lat": 46, "lon": 2},
+    center={"lat": 47, "lon": 2},
     mapbox_style="carto-positron",
-    zoom=4.7,
+    zoom=4.8,
 )
 
 # App layout
 app.layout = html.Div(
     [
-        html.H1("French electricity consumption", style={"text-align": "center"}),
+        html.H1(
+            "French electricity consumption", style={"text-align": "center"}
+        ),
         dcc.Tabs(
             id="tab",
             children=[
@@ -347,7 +357,9 @@ app.layout = html.Div(
                                                     id="elec_map",
                                                     clickData={
                                                         "points": [
-                                                            {"customdata": "34172"}
+                                                            {
+                                                                "customdata": "34172"
+                                                            }
                                                         ]
                                                     },
                                                 ),
@@ -356,9 +368,18 @@ app.layout = html.Div(
                                         dcc.Dropdown(
                                             id="slct_plot_style",
                                             options=[
-                                                {"label": "Violin", "value": "violin"},
-                                                {"label": "Swarm", "value": "swarm"},
-                                                {"label": "Bar", "value": "bar"},
+                                                {
+                                                    "label": "Violin",
+                                                    "value": "violin",
+                                                },
+                                                {
+                                                    "label": "Swarm",
+                                                    "value": "swarm",
+                                                },
+                                                {
+                                                    "label": "Bar",
+                                                    "value": "bar",
+                                                },
                                             ],
                                             multi=False,
                                             value="violin",
@@ -384,7 +405,9 @@ app.layout = html.Div(
                                     multi=False,
                                     style={"width": "40%"},
                                 ),
-                                dcc.Dropdown(id="slct_dept", style={"width": "40%"}),
+                                dcc.Dropdown(
+                                    id="slct_dept", style={"width": "40%"}
+                                ),
                                 html.Br(),
                                 # Second Visuals Histogram
                                 html.Div(id="output_container", children=[]),
@@ -412,7 +435,12 @@ app.layout = html.Div(
                                 dcc.Graph(
                                     id="elec_map_dept",
                                     figure=elec_map_fig,
-                                    style={"width": "90vh", "height": "90vh", "margin-left": "25%", "margin_right": "25%"},
+                                    style={
+                                        "width": "90vh",
+                                        "height": "90vh",
+                                        "margin-left": "25%",
+                                        "margin_right": "25%",
+                                    },
                                 ),
                             ],
                         )
@@ -447,7 +475,9 @@ def update_graph(clickdata):
         opacity=0.6,
     )
 
-    hovertemplate = "<br>City code: %{location}" "<br>Conso: %{customdata:.3s} MWh/hb"
+    hovertemplate = (
+        "<br>City code: %{location}" "<br>Conso: %{customdata:.3s} MWh/hb"
+    )
     fig.data[0]["hovertemplate"] = hovertemplate
 
     return fig
@@ -506,14 +536,18 @@ def update_hist(reg_slctd, slct_dept):
     if slct_dept is None:
         fig3 = hist(reg_slctd)
         container = (
-            f"The city with the maximum consumption is: {max_conso(reg_slctd)} \n"
-            f"The city with the minimum consumption is: {min_conso(reg_slctd)}"
+            f"The city with the maximum consumption"
+            f" is: {max_conso(reg_slctd)} \n"
+            f"The city with the minimum consumption"
+            f" is: {min_conso(reg_slctd)}"
         )
     else:
         fig3 = hist(slct_dept)
         container = (
-            f"The city with the maximum consumption is: {max_conso(slct_dept)} \n"
-            f"The city with the minimum consumption is: {min_conso(slct_dept)}"
+            f"The city with the maximum consumption"
+            f" is: {max_conso(slct_dept)} \n"
+            f"The city with the minimum consumption"
+            f" is: {min_conso(slct_dept)}"
         )
 
     return container, fig3

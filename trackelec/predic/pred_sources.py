@@ -184,7 +184,9 @@ df3 = df3.sort_values(by=["ds", "Heure"], ascending=(True, True))
 df3["ds"] = pd.to_datetime(df3["ds"])
 model2 = Prophet()
 model2.fit(df3)
-f2 = model2.make_future_dataframe(periods=48 * 10, freq="30min", include_history=False)
+f2 = model2.make_future_dataframe(
+    periods=48 * 10, freq="30min", include_history=False
+)
 predic1 = model2.predict(f2)
 s = predic1[["ds", "yhat"]]
 predic_finale1 = s[len(s) - 49 : 479]
@@ -210,7 +212,9 @@ result = result.assign(D2=result2)
 
 
 result["abs(D1 - D2)"] = result.apply(lambda f: x(f["D1"], f["D2"]), axis=1)
-result["Moyenne M1 et M2"] = result.apply(lambda f: y(f["D1"], f["D2"]), axis=1)
+result["Moyenne M1 et M2"] = result.apply(
+    lambda f: y(f["D1"], f["D2"]), axis=1
+)
 # print(result)
 
 # calcul de la difference en moyenne
@@ -241,7 +245,9 @@ df2 = df2.sort_values(by=["ds", "Heure"], ascending=(True, True))
 df2["ds"] = pd.to_datetime(df2["ds"])
 model1 = Prophet()
 model1.fit(df2)
-f = model1.make_future_dataframe(periods=48 * 10, freq="30min", include_history=False)
+f = model1.make_future_dataframe(
+    periods=48 * 10, freq="30min", include_history=False
+)
 predic = model1.predict(f)
 s = predic[["ds", "yhat"]]
 predic_finale = s[len(s) - 49 : 479]
@@ -268,7 +274,9 @@ resultF = resultF.assign(D4=result4)
 
 
 resultF["abs(D3 - D4)"] = resultF.apply(lambda f: x(f["D3"], f["D4"]), axis=1)
-resultF["Moyenne M1 et M2"] = resultF.apply(lambda f: y(f["D3"], f["D4"]), axis=1)
+resultF["Moyenne M1 et M2"] = resultF.apply(
+    lambda f: y(f["D3"], f["D4"]), axis=1
+)
 # print(resultF)
 
 Diff2 = resultF["abs(D3 - D4)"].mean()
@@ -297,7 +305,9 @@ df4 = df4.sort_values(by=["ds", "Heure"], ascending=(True, True))
 df4["ds"] = pd.to_datetime(df4["ds"])
 model3 = Prophet()
 model3.fit(df4)
-f3 = model3.make_future_dataframe(periods=48 * 10, freq="30min", include_history=False)
+f3 = model3.make_future_dataframe(
+    periods=48 * 10, freq="30min", include_history=False
+)
 predic2 = model3.predict(f3)
 s = predic2[["ds", "yhat"]]
 predic_finale2 = s[len(s) - 49 : 479]
@@ -323,7 +333,9 @@ resultH = resultH.assign(D6=result6)
 
 
 resultH["abs(D5 - D6)"] = resultH.apply(lambda f: x(f["D5"], f["D6"]), axis=1)
-resultH["Moyenne M1 et M2"] = resultH.apply(lambda f: y(f["D5"], f["D6"]), axis=1)
+resultH["Moyenne M1 et M2"] = resultH.apply(
+    lambda f: y(f["D5"], f["D6"]), axis=1
+)
 # print(resultH)
 
 Diff3 = resultH["abs(D5 - D6)"].mean()
@@ -331,7 +343,11 @@ Diff3 = resultH["abs(D5 - D6)"].mean()
 # Dataframe contenant la moyenne
 moyH = resultH[["Moyenne M1 et M2"]]
 
-print("Hydarulique : En moyenne la différence des deux méthodes est de", Diff3, "MW")
+print(
+    "Hydarulique : En moyenne la différence des deux méthodes est de",
+    Diff3,
+    "MW",
+)
 
 
 # Affichage graphique
@@ -353,7 +369,9 @@ df5 = df5.sort_values(by=["ds", "Heure"], ascending=(True, True))
 df5["ds"] = pd.to_datetime(df5["ds"])
 model4 = Prophet()
 model4.fit(df5)
-f4 = model4.make_future_dataframe(periods=48 * 10, freq="30min", include_history=False)
+f4 = model4.make_future_dataframe(
+    periods=48 * 10, freq="30min", include_history=False
+)
 predic3 = model4.predict(f4)
 s = predic3[["ds", "yhat"]]
 predic_finale3 = s[len(s) - 49 : 479]
@@ -379,7 +397,9 @@ resultN = resultN.assign(D8=result8)
 
 
 resultN["abs(D7 - D8)"] = resultN.apply(lambda f: x(f["D7"], f["D8"]), axis=1)
-resultN["Moyenne M1 et M2"] = resultN.apply(lambda f: y(f["D7"], f["D8"]), axis=1)
+resultN["Moyenne M1 et M2"] = resultN.apply(
+    lambda f: y(f["D7"], f["D8"]), axis=1
+)
 # print(resultN)
 
 Diff4 = resultN["abs(D7 - D8)"].mean()
@@ -387,7 +407,11 @@ Diff4 = resultN["abs(D7 - D8)"].mean()
 # Dataframe contenant la moyenne
 moyN = resultN[["Moyenne M1 et M2"]]
 
-print("Nucleaire : En moyenne la différence des deux méthodes est de", Diff4, "MW")
+print(
+    "Nucleaire : En moyenne la différence des deux méthodes est de",
+    Diff4,
+    "MW",
+)
 
 
 # Affichage graphique
