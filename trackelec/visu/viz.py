@@ -3,7 +3,8 @@ import os
 from download import download
 import pandas as pd
 import plotly.express as px
-import urllib, json
+import urllib
+import json
 from flask_caching import Cache
 from dash import Dash, dcc, html, Input, Output
 
@@ -34,12 +35,13 @@ df.fillna("Florange", inplace=True)
 # Converting city names to lower case to avoid case errors
 df["nom"] = df["nom"].str.lower()
 
-city_path = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/communes.geojson" #"../../data/communes.json"
-dept_path = "../../data/dept.geojson"
+city_path = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/communes.geojson"
+dept_path = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson"
 # cities = json.load(open(city_path, "r"))
-with urllib.request.urlopen("https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/communes.geojson") as url:
+with urllib.request.urlopen(city_path) as url:
     cities = json.load(url)
-# TODO map by dept
+with urllib.request.urlopen(dept_path) as url:
+    dept = json.load(url)
 
 
 # Plots and max/min
@@ -219,28 +221,6 @@ def hist(dept):
     return fig
 
 
-# Interactive map
-app = Dash(__name__)
-
-cache = Cache(
-    app.server, config={"CACHE_TYPE": "filesystem", "CACHE_DIR": "cache-directory"}
-)
-CACHE_TIMEOUT = int(os.environ.get("DASH_CACHE_TIMEOUT", "60"))
-
-
-@cache.memoize(timeout=CACHE_TIMEOUT)
-def compute_map_data():
-    """Return the dataframe of the cities' consumption averaged over the four years"""
-    dff = df.copy()
-    dff = (
-        dff.groupby(["code", "dept"])
-        .agg({"conso": "mean", "nom": "first"})
-        .reset_index()
-    )
-
-    return dff
-
-
 def max_conso(dept):
     """Get the city with maximum consumption of the dept/region
     and return city name and its conso"""
@@ -277,76 +257,168 @@ def min_conso(dept):
     return row.iloc[0]["nom"], round(row.iloc[0]["conso"], 3)
 
 
+# Interactive map
+app = Dash(__name__)
+
+cache = Cache(
+    app.server, config={"CACHE_TYPE": "filesystem", "CACHE_DIR": "cache-directory"}
+)
+CACHE_TIMEOUT = int(os.environ.get("DASH_CACHE_TIMEOUT", "60"))
+
+
+@cache.memoize(timeout=CACHE_TIMEOUT)
+def compute_map_data():
+    """Return the dataframe of the cities' consumption averaged over the four years"""
+    dff = df.copy()
+    dff = (
+        dff.groupby(["code", "dept"])
+        .agg({"conso": "mean", "nom": "first"})
+        .reset_index()
+    )
+
+    return dff
+
+
+# Map by department
+
+name_list = ["" for _ in range(1, 97)]
+code_list = [str(i) if i >= 10 else "0" + str(i) for i in range(1, 97)]
+
+dico = {"code": [], "conso": []}
+
+code_avg_dept = list(compute_map_data()["code"])
+conso_avg_dept = list(compute_map_data()["conso"])
+
+init_list_conso = [0 for _ in range(96)]
+index_count = [0 for _ in range(96)]
+
+for i in range(len(conso_avg_dept)):
+    if str(code_avg_dept[i]):
+        index = int(str(code_avg_dept[i])[:-3])
+        index_count[index - 1] += 1
+        init_list_conso[index - 1] += conso_avg_dept[i]
+
+avg_conso = [0 for _ in range(96)]
+
+for i in range(len(avg_conso)):
+    if index_count[i] != 0:
+        avg_conso[i] = init_list_conso[i] * (1 / index_count[i])
+    # Adjust color scale for depts without any data
+    else:
+        avg_conso[i] = 3
+
+df2 = pd.DataFrame({"nom": name_list, "code": code_list, "conso": avg_conso})
+
+elec_map_fig = px.choropleth_mapbox(
+    df2,
+    geojson=dept,
+    color=df2.conso,
+    locations=df2.code,
+    featureidkey="properties.code",
+    center={"lat": 46, "lon": 2},
+    mapbox_style="carto-positron",
+    zoom=4.7,
+)
+
 # App layout
 app.layout = html.Div(
     [
         html.H1("French electricity consumption", style={"text-align": "center"}),
-        # Control Panel
-        html.Div(
-            [
-                # First Visuals
-                html.Div(
-                    className="row",
+        dcc.Tabs(
+            id="tab",
+            children=[
+                dcc.Tab(
+                    label="Consumption by city",
+                    children=[
+                        # Control Panel
+                        html.Div(
+                            [
+                                # First Visuals
+                                html.Div(
+                                    className="row",
+                                    children=[
+                                        html.Div(
+                                            className="seven columns pretty_container",
+                                            children=[
+                                                dcc.Markdown(
+                                                    children="_Click on the map to show the city's consumption._"
+                                                ),
+                                                dcc.Graph(
+                                                    id="elec_map",
+                                                    clickData={
+                                                        "points": [
+                                                            {"customdata": "34172"}
+                                                        ]
+                                                    },
+                                                ),
+                                            ],
+                                        ),
+                                        dcc.Dropdown(
+                                            id="slct_plot_style",
+                                            options=[
+                                                {"label": "Violin", "value": "violin"},
+                                                {"label": "Swarm", "value": "swarm"},
+                                                {"label": "Bar", "value": "bar"},
+                                            ],
+                                            multi=False,
+                                            value="violin",
+                                            style={"width": "40%"},
+                                        ),
+                                        html.Div(
+                                            className="row2",
+                                            children=[
+                                                dcc.Graph(id="plot"),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ]
+                        ),
+                        # Control panel
+                        html.Div(
+                            [
+                                dcc.Dropdown(
+                                    list(regions.keys()),
+                                    "Occitanie",
+                                    id="slct_reg",
+                                    multi=False,
+                                    style={"width": "40%"},
+                                ),
+                                dcc.Dropdown(id="slct_dept", style={"width": "40%"}),
+                                html.Br(),
+                                # Second Visuals Histogram
+                                html.Div(id="output_container", children=[]),
+                                html.Div(
+                                    className="row",
+                                    children=[
+                                        html.Div(
+                                            className="row2",
+                                            children=[
+                                                dcc.Graph(id="hist"),
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ]
+                        ),
+                    ],
+                ),
+                dcc.Tab(
+                    label="Consumption by department",
                     children=[
                         html.Div(
                             className="seven columns pretty_container",
                             children=[
-                                dcc.Markdown(
-                                    children="_Click on the map to show the city's consumption._"
-                                ),
                                 dcc.Graph(
-                                    id="elec_map",
-                                    clickData={"points": [{"customdata": "34172"}]},
+                                    id="elec_map_dept",
+                                    figure=elec_map_fig,
+                                    style={"width": "90vh", "height": "90vh", "margin-left": "25%", "margin_right": "25%"},
                                 ),
                             ],
-                        ),
-                        dcc.Dropdown(
-                            id="slct_plot_style",
-                            options=[
-                                {"label": "Violin", "value": "violin"},
-                                {"label": "Swarm", "value": "swarm"},
-                                {"label": "Bar", "value": "bar"},
-                            ],
-                            multi=False,
-                            value="violin",
-                            style={"width": "40%"},
-                        ),
-                        html.Div(
-                            className="row2",
-                            children=[
-                                dcc.Graph(id="plot"),
-                            ],
-                        ),
+                        )
                     ],
                 ),
-            ]
-        ),
-        # Second control panel
-        html.Div(
-            [
-                dcc.Dropdown(
-                    list(regions.keys()),
-                    "Occitanie",
-                    id="slct_reg",
-                    multi=False,
-                    style={"width": "40%"},
-                ),
-                dcc.Dropdown(id="slct_dept", style={"width": "40%"}),
-                html.Br(),
-                # Second Visuals Histogram
-                html.Div(id="output_container", children=[]),
-                html.Div(
-                    className="row",
-                    children=[
-                        html.Div(
-                            className="row2",
-                            children=[
-                                dcc.Graph(id="hist"),
-                            ],
-                        ),
-                    ],
-                ),
-            ]
+            ],
         ),
     ]
 )
@@ -357,8 +429,8 @@ app.layout = html.Div(
     Output(component_id="elec_map", component_property="figure"),
     [Input(component_id="elec_map", component_property="clickData")],
 )
-def update_graph(clickData):
-    print(clickData)
+def update_graph(clickdata):
+    print(clickdata)
 
     dff = compute_map_data()
 
@@ -375,11 +447,7 @@ def update_graph(clickData):
         opacity=0.6,
     )
 
-    hovertemplate = (
-        "<br>City code: %{location}"
-        "<br>Conso: %{customdata:.3s} MWh/hb"
-        "<br>City name: %{customdata:.3s} MWh/hb"
-    )
+    hovertemplate = "<br>City code: %{location}" "<br>Conso: %{customdata:.3s} MWh/hb"
     fig.data[0]["hovertemplate"] = hovertemplate
 
     return fig
