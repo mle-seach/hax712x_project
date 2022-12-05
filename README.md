@@ -1,7 +1,7 @@
 # HAX712X Project TRACKELEC
 
 <p align="center">
-  <img src="https://github.com/mle-seach/hax712x_project/blob/Prediction/data/tracteur_electrique.jpg" width=400 title="Tracteur">
+  <img src="https://github.com/mle-seach/hax712x_project/blob/master/data/tracteur_electrique.jpg" width=400 title="Tracteur">
 </p>
 
 
