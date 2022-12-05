@@ -28,11 +28,10 @@ pylab.rcParams.update(params)
 url = "https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B"
 path_target = "./consommation3.csv"
 path, fname = os.path.split(path_target)
-pooch.retrieve(url, path=path, fname=fname, known_hash=None)
+pooch.retrieve(url, path=path, fname=fname, known_hash="7e9f34b82750bd1a4d4620b7d886547abdec1cbdcd934af39b1101a8f98bfa31")
 
 # Préparation de notre jeu de données
 cons = pd.read_csv("consommation3.csv", sep=";")
-
 cons = cons.set_index("Date")
 # print(cons.head(10))
 
