@@ -4,10 +4,11 @@ Created on Wed Nov 16 13:30:59 2022
 
 @author: Pauline
 """
+import os
+
+import matplotlib.pyplot as plt
 import pandas as pd
 import pooch
-import os
-import matplotlib.pyplot as plt
 import pylab
 from prophet import Prophet
 
@@ -28,7 +29,8 @@ pylab.rcParams.update(params)
 url = "https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B"
 path_target = "./consommation3.csv"
 path, fname = os.path.split(path_target)
-pooch.retrieve(url, path=path, fname=fname, known_hash="7e9f34b82750bd1a4d4620b7d886547abdec1cbdcd934af39b1101a8f98bfa31")
+pooch.retrieve(url, path=path, fname=fname,
+               known_hash="7e9f34b82750bd1a4d4620b7d886547abdec1cbdcd934af39b1101a8f98bfa31")
 
 # Préparation de notre jeu de données
 cons = pd.read_csv("consommation3.csv", sep=";")
@@ -221,10 +223,8 @@ result["Moyenne M1 et M2"] = result.apply(
 Diff1 = result["abs(D1 - D2)"].mean()
 print("Gaz : En moyenne la différence des deux méthodes est de", Diff1, "MW")
 
-
 # Dataframe contenant la moyenne
 moyG = result[["Moyenne M1 et M2"]]
-
 
 # Affichage graphique
 idee2 = df_gaz1[["Heure"]]
@@ -234,7 +234,6 @@ idee2 = idee2.assign(methode2=result2)
 
 idee2.plot(x="Heure")
 plt.title("Comparaison prediction Gaz")
-
 
 # Etude du Fioul
 df2 = data1.copy()
@@ -286,7 +285,6 @@ moyF = resultF[["Moyenne M1 et M2"]]
 
 print("Fioul : En moyenne la différence des deux méthodes est de", Diff2, "MW")
 
-
 # Affichage graphique
 idee1 = df_fioul1[["Heure"]]
 idee1 = idee1.assign(moyenne=moyF)
@@ -331,7 +329,6 @@ result6 = pd.DataFrame(list_hyd2, columns=["D6"])
 resultH = result5
 resultH = resultH.assign(D6=result6)
 
-
 resultH["abs(D5 - D6)"] = resultH.apply(lambda f: x(f["D5"], f["D6"]), axis=1)
 resultH["Moyenne M1 et M2"] = resultH.apply(
     lambda f: y(f["D5"], f["D6"]), axis=1
@@ -349,7 +346,6 @@ print(
     "MW",
 )
 
-
 # Affichage graphique
 idee3 = df_hyd1[["Heure"]]
 idee3 = idee3.assign(moyenne=moyH)
@@ -358,7 +354,6 @@ idee3 = idee3.assign(methode2=result6)
 
 idee3.plot(x="Heure")
 plt.title("Comparaison prediction Hydraulique")
-
 
 # Etude du Nucleaire
 df5 = data1.copy()
@@ -395,7 +390,6 @@ result8 = pd.DataFrame(list_nuc2, columns=["D8"])
 resultN = result7
 resultN = resultN.assign(D8=result8)
 
-
 resultN["abs(D7 - D8)"] = resultN.apply(lambda f: x(f["D7"], f["D8"]), axis=1)
 resultN["Moyenne M1 et M2"] = resultN.apply(
     lambda f: y(f["D7"], f["D8"]), axis=1
@@ -413,13 +407,11 @@ print(
     "MW",
 )
 
-
 # Affichage graphique
 idee4 = df_nuc1[["Heure"]]
 idee4 = idee4.assign(moyenne=moyN)
 idee4 = idee4.assign(methode1=result7)
 idee4 = idee4.assign(methode2=result8)
-
 
 idee4.plot(x="Heure")
 plt.title("Comparaison predictions Nucleaire")

@@ -12,7 +12,6 @@
 #
 import os
 import sys
-import sphinx_rtd_theme
 
 sys.path.insert(0, os.path.abspath("/Users/Pauline/Desktop/essai/source"))
 
@@ -24,7 +23,6 @@ author = "Pauline"
 
 # The full version, including alpha/beta/rc tags
 release = "0"
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -52,7 +50,6 @@ language = "fr"
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
-
 
 # -- Options for HTML output -------------------------------------------------
 

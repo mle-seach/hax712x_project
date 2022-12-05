@@ -3,11 +3,12 @@ Created on Wed Nov  9 20:06:02 2022
 
 @author: Pauline
 """
-import pandas as pd
-import matplotlib.pyplot as plt
-import pylab
-import pooch
 import os
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import pooch
+import pylab
 
 # Paramètres d'affichage
 pylab.style.use("fivethirtyeight")
@@ -28,11 +29,9 @@ path_target = "./consommation3.csv"
 path, fname = os.path.split(path_target)
 pooch.retrieve(url, path=path, fname=fname, known_hash=None)
 
-
 # Visualisation des données
 
 data = pd.read_csv("consommation3.csv", sep=";")
-
 
 # data = pd.read_csv('eco2mix-national-cons-def.csv', delimiter=';')
 # print(data.head(10))
@@ -50,7 +49,6 @@ conso2.dropna(inplace=True)
 conso3 = data.copy()
 conso3 = conso3[["Date", "Eolien (MW)", "Solaire (MW)", "Hydraulique (MW)"]]
 conso3.dropna(inplace=True)
-
 
 # On indexe sur les dates
 conso1["Date"] = pd.to_datetime(conso1["Date"])
@@ -86,6 +84,5 @@ daily_data3.columns = ["Eolien", "Solaire", "Hydraulique"]
 ax = daily_data1.plot(title="Consommation moyenne en MW", figsize=(15, 7))
 ax = daily_data2.plot(title="Consommation moyenne en MW", figsize=(15, 7))
 ax = daily_data3.plot(title="Consommation moyenne en MW", figsize=(15, 7))
-
 
 plt.show()

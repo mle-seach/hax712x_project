@@ -1,7 +1,7 @@
 .. Moyenne_sources documentation master file, created by
-   sphinx-quickstart on Tue Nov 22 11:38:04 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+sphinx-quickstart on Tue Nov 22 11:38:04 2022.
+You can adapt this file completely to your liking, but it should at least
+contain the root `toctree` directive.
 
 Documentation de TRACKELEC
 ======================================================================

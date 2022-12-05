@@ -1,13 +1,12 @@
+import json
 import os
+import urllib
 
-from download import download
 import pandas as pd
 import plotly.express as px
-import urllib
-import json
-from flask_caching import Cache
 from dash import Dash, dcc, html, Input, Output
-
+from download import download
+from flask_caching import Cache
 
 # Downloading data
 url = "https://data.enedis.fr/explore/dataset/consommation-annuelle-residentielle-par-adresse/download"
@@ -404,9 +403,9 @@ app.layout = html.Div(
                                             children=[
                                                 dcc.Markdown(
                                                     children="_Click on the map"
-                                                    " to show the "
-                                                    "city's "
-                                                    "consumption._"
+                                                             " to show the "
+                                                             "city's "
+                                                             "consumption._"
                                                 ),
                                                 dcc.Graph(
                                                     id="elec_map",

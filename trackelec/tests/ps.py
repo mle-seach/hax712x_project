@@ -1,6 +1,7 @@
+import os
+
 import pandas as pd
 import pooch
-import os
 
 url = "https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B"
 path_target = "./consommation3.csv"
@@ -24,6 +25,8 @@ conso2 = conso2.set_index("Date")
 conso2.dropna(inplace=True)
 NC = conso2.iloc[9, 0]
 NF = conso2.iloc[20, 1]
+
+
 # print(NC)
 # print(NF)
 
