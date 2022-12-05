@@ -1,4 +1,5 @@
 from setuptools import setup
+
 from trackelec import __version__ as current_version
 
 setup(
