@@ -138,6 +138,7 @@ L'application peut aussi être lancée en effectuant la commande bash suivante:
 $ cd hax712x_project/trackelec/visu
 $ python viz.py
 ``` 
+(Vous pouvez ignorer l'erreur "Callback error updating plot.figure")
 
 # Projet Mid-term :
 
