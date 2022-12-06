@@ -71,11 +71,17 @@ conda create -n trackelec_env python=3.9.12
 ```
 
 - Après avoir basculé dans votre nouvel environnement python, téléchargez les
-  modules présents dans le fichier requirements.txt via une commande `pip`
+  modules présents dans le fichier requirements.txt via la commande `pip`
   suivante:
 
 ```bash
 pip install -r requirements.txt 
+``` 
+
+- Assurez-vous d'avoir téléchargé les données nécéssaires au bon fonctionnement des différents programmes (Le téléchargement est assez long compte tenu de la limite de vitesse imposée par le site d'Enedis):
+
+  ```bash
+python script.py 
 ``` 
 
 - Après avoir effectué toutes ces manipulations , vous pouvez enfin installer
