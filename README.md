@@ -61,7 +61,7 @@ cours [IntroPython.pdf](http://josephsalmon.eu/enseignement/Montpellier/HLMA310/
 
 ```bash 
 git clone https://github.com/mle-seach/hax712x_project.git 
-cd hax712x_project/project/prediction/
+cd hax712x_project/trackelec
 ```
 
 - Créez un nouvel environnement de travail nommé "trackelec_env":
