@@ -57,7 +57,7 @@ cours [IntroPython.pdf](http://josephsalmon.eu/enseignement/Montpellier/HLMA310/
 
 ## Deuxième étape :
 
-- Clônez le référentiel et accédez au dossier prédiction :
+- Clônez le référentiel et accédez au dossier trackelec :
 
 ```bash 
 $ git clone https://github.com/mle-seach/hax712x_project.git 
