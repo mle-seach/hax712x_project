@@ -124,6 +124,21 @@ temporelles basées sur un modèle additif .
 Pour la consommation des différentes sources d'énergie, nous avons utilisé la
 méthode de la moyenne empirique et la méthode Prophet.
 
+# Visualisation :
+
+Pour ce qui est de la partie visualisation, elle a pour but d'afficher sous
+forme de carte intéractive la consommation éléctrique française.
+Une carte par départements ainsi qu'une carte par villes sont disponibles.
+
+L'application est disponible [ici](http:/thibaultf02.pythonanywhere.com/).
+
+L'application peut aussi être lancée en effectuant la commande bash suivante:
+
+```bash
+$ cd hax712x_project/trackelec/visu
+$ python viz.py
+``` 
+
 # Projet Mid-term :
 
 ## Programme de travail et affectation des tâches
