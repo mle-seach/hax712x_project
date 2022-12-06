@@ -8,22 +8,20 @@ Objectif de cette section : prédir la consommation d'électricité en France po
 Petite introduction : 
 -----------------------------------------------------------------
 
-Prophet est un module Python qui permet d'effectuer des prévisions de séries temporelles basée sur un modèle additif . .. _source: https://facebook.github.io/prophet/docs/quick_start.html#python-api .
+Prophet est un module Python qui permet d'effectuer des prévisions de séries temporelles basée sur un modèle additif . 
 
-Comment fonctionne Prophet ?
-------------------------------------------------------------------
- Pour commencer nous allons définir quelques notions importantes :
+Avant de commencer nous allons définir quelques notions importantes :
 
  Une série temporelle est une suite de données indexée par le temps , par exemple : 
 
- .. image:: conso_fr.pdf 
+ .. image:: conso_fr.png 
     :scale: 50%
     :align: center
 \
 
 Modèle prophet :
 
-.. image:: additif_mod.pdf
+.. image:: additif_mod.png
     :scale: 70%
     :align: center
 \
@@ -49,8 +47,8 @@ Dans un premier temps , nous allons installer ce package grâce à la commande `
 ---------------------------------------------------------------------
 Nous allons à présent travailler avec les données de la consommation d'électricité en France du 7 décembre 2014 jusqu'au 29 novembre 2022 (par 1/2 heure) , pour celà nous allons créer deux dataframes à partir des deux url suivantes, les nettoyer , puis les concaténer :
 
-.. _url1: https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/table/?disjunctive.nature&sort=-date_heure&refine.date_heure=2015&q.timerange.date_heure=date_heure:%5B2015-12-06T23:00:00Z+TO+2022-05-31T21:59:59Z%5D
-.. _url2: https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/download/?format=csv&disjunctive.nature=true&q=date_heure:%5B2022-05-31T22:00:00Z+TO+2022-11-29T22:59:59Z%5D&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B) 
+url1: https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/table/?disjunctive.nature&sort=-date_heure&refine.date_heure=2015&q.timerange.date_heure=date_heure:%5B2015-12-06T23:00:00Z+TO+2022-05-31T21:59:59Z%5D
+url2: https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/download/?format=csv&disjunctive.nature=true&q=date_heure:%5B2022-05-31T22:00:00Z+TO+2022-11-29T22:59:59Z%5D&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B) 
 
 Premier dataframe :
 
@@ -283,5 +281,7 @@ Finalement , nous allons sélectionner les les lignes qui nous intéressent (cel
 
 8. Références :
 ----------------------------------------------------------------------------
-.. _Documentation fbProphet: https://facebook.github.io/prophet/docs/quick_start.html#python-api .
-.. _Series temporelles: https://www.programmez.com/magazine/article/quelques-bases-en-python-pour-la-prediction-de-series-temporelles
+
+Documentation fbProphet: https://facebook.github.io/prophet/docs/quick_start.html#python-api .
+
+Series temporelles: https://www.programmez.com/magazine/article/quelques-bases-en-python-pour-la-prediction-de-series-temporelles
