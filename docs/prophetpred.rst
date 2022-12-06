@@ -8,29 +8,28 @@ Objectif de cette section : prédir la consommation d'électricité en France po
 Petite introduction : 
 -----------------------------------------------------------------
 
-Prophet est un module Python qui permet d'effectuer des prévisions de séries temporelles basée sur un modèle additif . .. _source: https://facebook.github.io/prophet/docs/quick_start.html#python-api .
+Prophet est un module Python qui permet d'effectuer des prévisions de séries temporelles basée sur un modèle additif . 
 
-Comment fonctionne Prophet ?
-------------------------------------------------------------------
- Pour commencer nous allons définir quelques notions importantes :
+Avant de commencer nous allons définir quelques notions importantes :
 
- Une série temporelle est une suite de données indexée par le temps , par exemple : 
+Une série temporelle est une suite de données indexée par le temps , par exemple : 
 
- .. image:: Images/conso_fr.png 
+
+.. image:: conso_fr.png 
     :scale: 50%
     :align: center
 \
 
 Modèle prophet :
 
-.. image:: Images/additif_mod.png
-    :scale: 70%
+.. image:: additif_mod.png
+    :scale: 50%
     :align: center
 \
 
 avec respectivement :
 
-Tendance : la direction générale de nos données sur une longue période : est ce qu'elle a tendance à augmenter ou diminuer ?.
+Tendance : la direction générale de nos données sur une longue période : est ce qu'elle a tendance à augmenter ou diminuer ?
 
 Saisonnalité : fluctuation de la consommation d'électricité au cours de la semaine , journée ou de l'année .
 
@@ -49,8 +48,9 @@ Dans un premier temps , nous allons installer ce package grâce à la commande `
 ---------------------------------------------------------------------
 Nous allons à présent travailler avec les données de la consommation d'électricité en France du 7 décembre 2014 jusqu'au 29 novembre 2022 (par 1/2 heure) , pour celà nous allons créer deux dataframes à partir des deux url suivantes, les nettoyer , puis les concaténer :
 
-.. _url1: https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/table/?disjunctive.nature&sort=-date_heure&refine.date_heure=2015&q.timerange.date_heure=date_heure:%5B2015-12-06T23:00:00Z+TO+2022-05-31T21:59:59Z%5D
-.. _url2: https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/download/?format=csv&disjunctive.nature=true&q=date_heure:%5B2022-05-31T22:00:00Z+TO+2022-11-29T22:59:59Z%5D&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B) 
+url1: https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/table/?disjunctive.nature&sort=-date_heure&refine.date_heure=2015&q.timerange.date_heure=date_heure:%5B2015-12-06T23:00:00Z+TO+2022-05-31T21:59:59Z%5D.
+
+url2: https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/download/?format=csv&disjunctive.nature=true&q=date_heure:%5B2022-05-31T22:00:00Z+TO+2022-11-29T22:59:59Z%5D&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B. 
 
 Premier dataframe :
 
@@ -62,12 +62,13 @@ Premier dataframe :
     path_target = './consommation_elec.csv'
     path, fname = os.path.split(path_target)
     pooch.retrieve(url1, path=path, fname=fname, known_hash=None)
-
+\
 .. code:: python
     # Chargement du dataset "consommation_elec.csv":
     import pandas as pd
     data = pd.read_csv("consommation_elec.csv", delimiter=";", comment="#", na_values="n/d",parse_dates=['Date et Heure'], converters={'heure' : str})
 
+\
 
 Second dataframe : 
 
@@ -169,7 +170,7 @@ test : l'intervalle sur lequel nous allons tester notre modèle.
     plt.ylabel("Consommation")
     plt.show()
 
-.. image:: Images/data_train_test.png 
+.. image:: data_train_test.png 
     :scale: 50%
     :align: center
 \
@@ -189,16 +190,18 @@ Nous allons appliquer le modèle prophet (par défaut) et le comparer à nos vra
 
 Nous allons visualiser notre prédiction :
 
-.. image:: Images/pred_prop1.png
+.. image:: pred_prop1.png
     :scale: 50%
     :align: center
 /
+
 Nous allons ensuite le comparer à nos données :
 
-.. image:: Images/pred_vs_vrai1.png
+.. image:: pred_vs_vrai1.png
    :scale: 50%
    :align: center
 /
+
 
 5. Impact des évènements sur nos prévisions :
 ---------------------------------------------------------
@@ -212,7 +215,7 @@ Afin de savoir si les "évènements" on un effet sur la consommation de l'élect
 
 Nous allons ensuite comparer la prédiction à l'aide de ce modèle avec les vraies données :
 
-.. image:: Images/predic_vs_vrai2.png
+.. image:: predic_vs_vrai2.png
     :scale: 50%
     :align: center
 \
@@ -283,5 +286,7 @@ Finalement , nous allons sélectionner les les lignes qui nous intéressent (cel
 
 8. Références :
 ----------------------------------------------------------------------------
-.. _Documentation fbProphet: https://facebook.github.io/prophet/docs/quick_start.html#python-api .
-.. _Series temporelles: https://www.programmez.com/magazine/article/quelques-bases-en-python-pour-la-prediction-de-series-temporelles
+
+Documentation fbProphet: https://facebook.github.io/prophet/docs/quick_start.html#python-api .
+
+Series temporelles: https://www.programmez.com/magazine/article/quelques-bases-en-python-pour-la-prediction-de-series-temporelles
