@@ -11,15 +11,7 @@ La partie Visualisation a été construite en deux parties :
 
 Une carte par départements avec un histogramme des différentes consommations par villes en fonction du département.
 
-.. image:: Images/dept.png
-    :scale: 70%
-    :align: center
-
 Une carte par villes avec la distribution des différentes valeurs de consommation au cours des quatre années données.
-
-.. image:: Images/communes.png
-    :scale: 70%
-    :align: center
 
 
 1. Carte par départements et histogramme:
