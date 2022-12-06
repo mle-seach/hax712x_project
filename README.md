@@ -60,14 +60,14 @@ cours [IntroPython.pdf](http://josephsalmon.eu/enseignement/Montpellier/HLMA310/
 - Clônez le référentiel et accédez au dossier prédiction :
 
 ```bash 
-git clone https://github.com/mle-seach/hax712x_project.git 
-cd hax712x_project/trackelec
+$ git clone https://github.com/mle-seach/hax712x_project.git 
+$ cd hax712x_project/trackelec
 ```
 
 - Créez un nouvel environnement de travail nommé "trackelec_env":
 
 ```bash
-conda create -n trackelec_env python=3.9.12
+$ conda create -n trackelec_env python=3.9.12
 ```
 
 - Après avoir basculé dans votre nouvel environnement python, téléchargez les
@@ -75,20 +75,20 @@ conda create -n trackelec_env python=3.9.12
   suivante:
 
 ```bash
-pip install -r requirements.txt 
+$ pip install -r requirements.txt 
 ``` 
 
 - Assurez-vous d'avoir téléchargé les données nécéssaires au bon fonctionnement des différents programmes (Le téléchargement est assez long compte tenu de la limite de vitesse imposée par le site d'Enedis):
 
 ```bash
-python script.py 
+$ python script.py
 ``` 
 
 - Après avoir effectué toutes ces manipulations , vous pouvez enfin installer
   notre module `trackelec` via la commande suivante :
 
 ```bash
-pip install -i https://test.pypi.org/simple/ trackelec
+$ pip install -i https://test.pypi.org/simple/ trackelec
 ``` 
 
 # Les données
