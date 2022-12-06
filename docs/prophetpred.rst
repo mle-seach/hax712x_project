@@ -10,9 +10,9 @@ Petite introduction :
 
 Prophet est un module Python qui permet d'effectuer des prévisions de séries temporelles basée sur un modèle additif.
 
- Pour commencer nous allons définir quelques notions importantes :
+Pour commencer nous allons définir quelques notions importantes :
 
- Une série temporelle est une suite de données indexée par le temps , par exemple : 
+Une série temporelle est une suite de données indexée par le temps , par exemple : 
 
  .. image:: Images/conso_fr.png 
     :scale: 50%
@@ -295,4 +295,5 @@ Finalement , nous allons sélectionner les les lignes qui nous intéressent (cel
 ----------------------------------------------------------------------------
 
 Documentation fbProphet : https://facebook.github.io/prophet/docs/quick_start.html#python-api .
+
 Series temporelles : https://www.programmez.com/magazine/article/quelques-bases-en-python-pour-la-prediction-de-series-temporelles
