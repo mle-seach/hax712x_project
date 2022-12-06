@@ -5,13 +5,9 @@ import urllib
 import pandas as pd
 import plotly.express as px
 from dash import Dash, dcc, html, Input, Output
-from download import download
 from flask_caching import Cache
 
-# Downloading data
-url = "https://data.enedis.fr/explore/dataset/consommation-annuelle-residentielle-par-adresse/download"
 data_path = "data_viz.csv"
-path = download(url, data_path, progressbar=True, verbose=True)
 
 # Dataframe creation, keeping only useful columns
 df = pd.read_csv(data_path, sep=";", usecols=[0, 7, 8, 13])
@@ -36,8 +32,8 @@ df.fillna("Florange", inplace=True)
 # Converting city names to lower case to avoid case errors
 df["nom"] = df["nom"].str.lower()
 
-city_path = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/communes.geojson"
-dept_path = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson"
+city_path = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/communes.geojson"  # noqa
+dept_path = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson"  # noqa
 # cities = json.load(open(city_path, "r"))
 with urllib.request.urlopen(city_path) as url:
     cities = json.load(url)
@@ -391,10 +387,8 @@ app.layout = html.Div(
                 dcc.Tab(
                     label="Consumption by city",
                     children=[
-                        # Control Panel
                         html.Div(
                             [
-                                # First Visuals
                                 html.Div(
                                     className="row",
                                     children=[
@@ -402,18 +396,16 @@ app.layout = html.Div(
                                             className="two columns container",
                                             children=[
                                                 dcc.Markdown(
-                                                    children="_Click on the map"
-                                                             " to show the "
-                                                             "city's "
-                                                             "consumption._"
+                                                    children="_Click on the"
+                                                             " map to show the"
+                                                             " city's"
+                                                             " consumption._"
                                                 ),
                                                 dcc.Graph(
                                                     id="elec_map",
                                                     clickData={
                                                         "points": [
-                                                            {
-                                                                "customdata": "34172"
-                                                            }
+                                                            {"customdata": "34172"}  # noqa
                                                         ]
                                                     },
                                                 ),

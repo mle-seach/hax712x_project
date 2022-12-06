@@ -3,11 +3,8 @@ Created on Wed Nov  9 20:06:02 2022
 
 @author: Pauline
 """
-import os
-
 import matplotlib.pyplot as plt
 import pandas as pd
-import pooch
 import pylab
 
 # Paramètres d'affichage
@@ -24,10 +21,6 @@ params = {
 }
 pylab.rcParams.update(params)
 
-url = "https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B"
-path_target = "./consommation3.csv"
-path, fname = os.path.split(path_target)
-pooch.retrieve(url, path=path, fname=fname, known_hash=None)
 
 # Visualisation des données
 

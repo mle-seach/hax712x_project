@@ -4,11 +4,8 @@ Created on Wed Nov 16 13:30:59 2022
 
 @author: Pauline
 """
-import os
-
 import matplotlib.pyplot as plt
 import pandas as pd
-import pooch
 import pylab
 from prophet import Prophet
 
@@ -25,12 +22,6 @@ params = {
     "ytick.labelsize": "x-large",
 }
 pylab.rcParams.update(params)
-
-url = "https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B"
-path_target = "./consommation3.csv"
-path, fname = os.path.split(path_target)
-pooch.retrieve(url, path=path, fname=fname,
-               known_hash="7e9f34b82750bd1a4d4620b7d886547abdec1cbdcd934af39b1101a8f98bfa31")
 
 # Préparation de notre jeu de données
 cons = pd.read_csv("consommation3.csv", sep=";")
@@ -151,11 +142,6 @@ df_solaire = moy53.to_frame()
 
 # Comparaison avec le module Prophet #
 
-# Téléchargement des données de 2022 :
-url2 = "https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/download/?format=csv&disjunctive.nature=true&q=date_heure:%5B2022-05-31T22:00:00Z+TO+2022-11-29T22:59:59Z%5D&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B"
-path_target = "./consommation_2022.csv"
-path, fname = os.path.split(path_target)
-pooch.retrieve(url2, path=path, fname=fname, known_hash=None)
 
 # Chargement du dataset "consommation.csv"
 data1 = pd.read_csv(
