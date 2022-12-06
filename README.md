@@ -80,7 +80,7 @@ pip install -r requirements.txt
 
 - Assurez-vous d'avoir téléchargé les données nécéssaires au bon fonctionnement des différents programmes (Le téléchargement est assez long compte tenu de la limite de vitesse imposée par le site d'Enedis):
 
-  ```bash
+```bash
 python script.py 
 ``` 
 
