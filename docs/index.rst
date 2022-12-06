@@ -60,6 +60,7 @@ Le code correspondant à cette partie ce nomme ``viz.py``, vous pouvez retrouver
    ./moysources.rst
    ./predsources.rst
    ./prophetpred.rst 
+   ./visualisation.rst
 
 Indices and tables
 ==================
