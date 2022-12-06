@@ -296,4 +296,4 @@ Finalement , nous allons sélectionner les les lignes qui nous intéressent (cel
 
 Documentation fbProphet : https://facebook.github.io/prophet/docs/quick_start.html#python-api .
 
-Series temporelles : https://www.programmez.com/magazine/article/quelques-bases-en-python-pour-la-prediction-de-series-temporelles
+Series temporelles : https://www.programmez.com/magazine/article/quelques-bases-en-python-pour-la-prediction-de-series-temporelles.
