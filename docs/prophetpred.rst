@@ -2,7 +2,7 @@ Prédiction de la consommation d'électricité en France avec Prophet :
 ===================================================================
 Dans cette section , nous allons affectuer la documentation du code ``prediction_consommation.ipynb``
 
-Objectif de cette section : prédire la consommation d'électricité en France pour le 08 décembre 2022 tous les quarts d'heure en contstruisant un modèle basé sur les séries temporelles.
+Objectif de cette section : prédire la consommation d'électricité en France pour le 08 décembre 2022 tous les quarts d'heure en construisant un modèle basé sur les séries temporelles.
 
 
 Petite introduction : 
