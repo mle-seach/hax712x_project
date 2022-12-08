@@ -11,7 +11,7 @@ Ce code a pour but de prédire la consommation électrique produite par différe
 Explication du code en généralité
 -----------------------------------
 
-Dans un pemier temps, il nous faut importer les données présentes au lien suivant : https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B .
+Dans un premier temps, il nous faut importer les données présentes au lien suivant : https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B .
 Après ça, nous avons choisi la colonne 'Date' comme index afin de récupérer seulement les données du 8 décembre de chaque année disponible.
 *En effet, nous avons fait le choix de faire notre prédiction selon l'estimateur de l'espérance. Il nous faut donc calculer la moyenne empirique.*
 
