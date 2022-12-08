@@ -15,7 +15,7 @@ Dans un pemier temps, il nous faut importer les données présentes au lien suiv
 Après ça, nous avons choisi la colonne 'Date' comme index afin de récupérer seulement les données du 8 décembre de chaque année disponible.
 *En effet, nous avons fait le choix de faire notre prédiction selon l'estimateur de l'espérance. Il nous faut donc calculer la moyenne empirique.*
 
-Nous avons par la suite créé des 'sous-data' qui contiendront chacun les données des différentes sources d'énergie et les heures.
+Nous avons par la suite créé des 'sous-data' qui contiennent chacun les données des différentes sources d'énergie et les heures.
 Nous avons fait le choix de placer, l'éolien, l'hydraulique et le solaire dans le même dataframe car ce sont toutes des sources d'énergie dites renouvelables/propres.
 
 Dans chaque cas, nous avons nettoyé notre jeu de données avec la commande ``data.dropna()`` et trié les valeurs selon l'axe Heure.
