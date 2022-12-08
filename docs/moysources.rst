@@ -12,10 +12,10 @@ Nous avons créé ce code dans le but de nous donner un modèle global de l'usag
 Explication du code en généralité
 ----------------------------------
 
-Dans un pemier temps, il nous faut importer les données présentes au lien suivant : https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B .
-Suite à ça, on a créé trois dataframes contenant chacun les données pour les différentes sources d'énergie.
+Dans un pemier temps, il nous faut importer les données présentes à partir du lien suivant : https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/download/?format=csv&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B .
+Suite à ça, nous avons créé trois dataframes contenant chacun les données pour les différentes sources d'énergie.
 
-Dans un second temps, nous avons ré-indéxé les dataframes selon la date, et nous les avons réordonnés selon cette dernière. 
+Dans un second temps, nous avons ré-indéxé les dataframes selon la date, et les avons réordonnés selon cette dernière. 
 Après ça, nous avons simplement calculé la moyenne selon les dates et affiché nos résultats. 
 
 Exemple de résultats obtenus :
