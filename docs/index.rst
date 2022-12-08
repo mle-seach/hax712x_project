@@ -43,13 +43,13 @@ Nous nous sommes basés sur le module ``prophet``, vous pouvez retrouver la docu
 
 Dans un second temps, nous avons différencié les sources d'énergie produisant l'électricité afin d'estimer leur utilisation à ce même jour.
 Les codes correspondant à cette partie ce nomment ``moyenne_autres_sources.py`` et ``pred_sources.py``, vous pouvez retrouver respectivement leur documentation dans les parties 
-Moyenne des sources d'éléctricité et Prédiction des sources d'électricité. 
+"Moyenne des sources d'éléctricité" et "Prédiction des sources d'électricité". 
 
 Partie Visualisation 
 ====================
 
 Cette partie, nous avons réalisé la visualisation des consommations annuelles moyennes d'électricité entre 2018 et 2021;
-Le code correspondant à cette partie ce nomme ``viz.py``, vous pouvez retrouver sa documentation dans la partie 
+Le code correspondant à cette partie se nomme ``viz.py``, vous pouvez retrouver sa documentation dans la partie 
 
 
 .. toctree::
