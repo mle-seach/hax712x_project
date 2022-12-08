@@ -2,7 +2,7 @@ Prédiction de la consommation d'électricité en France avec Prophet :
 ===================================================================
 Dans cette section , nous allons affectuer la documentation du code ``prediction_consommation.ipynb``
 
-Objectif de cette section : prédir la consommation d'électricité en France pour le 08 décembre 2022 tous les quarts d'heure en contstruisant un modèle  basé sur les séries temporelles.
+Objectif de cette section : prédire la consommation d'électricité en France pour le 08 décembre 2022 tous les quarts d'heure en contstruisant un modèle basé sur les séries temporelles.
 
 
 Petite introduction : 
@@ -28,9 +28,9 @@ Modèle prophet :
 
 avec respectivement :
 
-Tendance : la direction générale de nos données sur une longue période : est ce qu'elle a tendance à augmenter ou diminuer ?.
+Tendance : la direction générale de nos données sur une longue période : a-t-elle tendance à augmenter ou diminuer ?
 
-Saisonnalité : fluctuation de la consommation d'électricité au cours de la semaine , journée ou de l'année .
+Saisonnalité : fluctuation de la consommation d'électricité au cours de la semaine, journée ou de l'année .
 
 vacances : l'effet des évènements ponctuels sur la consommation d'électricité. 
 
@@ -46,7 +46,7 @@ Dans un premier temps , nous allons installer ce package grâce à la commande `
 
 1. Création de la base de données :
 ---------------------------------------------------------------------
-Nous allons à présent travailler avec les données de la consommation d'électricité en France du 7 décembre 2014 jusqu'au 29 novembre 2022 (par 1/2 heure) , pour celà nous allons créer deux dataframes à partir des deux url suivantes, les nettoyer , puis les concaténer :
+Nous allons à présent travailler avec les données de la consommation d'électricité en France du 7 décembre 2014 jusqu'au 29 novembre 2022 (par 1/2 heure) , pour celà nous allons créer deux dataframes à partir des deux url suivantes, les nettoyer, puis les concaténer :
 
 .. _url1: https://odre.opendatasoft.com/explore/dataset/eco2mix-national-cons-def/table/?disjunctive.nature&sort=-date_heure&refine.date_heure=2015&q.timerange.date_heure=date_heure:%5B2015-12-06T23:00:00Z+TO+2022-05-31T21:59:59Z%5D
 .. _url2: https://odre.opendatasoft.com/explore/dataset/eco2mix-national-tr/download/?format=csv&disjunctive.nature=true&q=date_heure:%5B2022-05-31T22:00:00Z+TO+2022-11-29T22:59:59Z%5D&timezone=Europe/Berlin&lang=fr&use_labels_for_header=true&csv_separator=%3B) 
@@ -85,11 +85,11 @@ Second dataframe :
     
 2. Nettoyage des données : 
 --------------------------------------------------------------------------------
-Afin d'appliquer prophet , notre adataframe doit avoir une forme spécifique :
+Afin d'appliquer prophet, notre dataframe doit avoir une forme spécifique :
 
 la première colonne doit porter le nom *ds* et contenir les dates (converti en objet datetime).
 
-La deuxième colonne doit porter le nom de *y* et contenir ce que l'on veut prédire , dans notre cas la colonne *consommation*.
+La deuxième colonne doit porter le nom de *y* et contenir ce que l'on veut prédire, dans notre cas la colonne *consommation*.
 
 Premier dataframe : 
 
@@ -209,7 +209,7 @@ Nous allons ensuite le comparer à nos données :
 
 5. Impact des évènements sur nos prévisions :
 ---------------------------------------------------------
-Afin de savoir si les "évènements" on un effet sur la consommation de l'électricité nous allons charger la base de données des jours fériés en France et les rajouter comme nouvelles composantes à notre modèle: 
+Afin de savoir si les "évènements" ont un effet sur la consommation de l'électricité nous allons charger la base de données des jours fériés en France et les rajouter comme nouvelles composantes à notre modèle : 
 
 .. code:: python
 
@@ -227,9 +227,9 @@ Nous allons ensuite comparer la prédiction à l'aide de ce modèle avec les vra
 
 Conclusion : les jours fériés n'ont pas un énorme impact sur notre prédiction, nous allons reprendre le modèle initial et l'utiliser pour faire nos prévisions. 
 
-6. Application du modèle à notre jeu de données:
+6. Application du modèle à notre jeu de données :
 ----------------------------------------------------------------
-Nous allons ensuite effectuer un test sur nos données et prédire 10 jour à partir du 29 novembre (on multiplie 10*96 car il y a 96 quarts d'heure dans une journée ):
+Nous allons ensuite effectuer un test sur nos données et prédire 10 jours à partir du 29 novembre (on multiplie 10*96 car il y a 96 quarts d'heure dans une journée ):
 
 .. code:: python
 
@@ -239,7 +239,7 @@ Nous allons ensuite effectuer un test sur nos données et prédire 10 jour à pa
     f = model.make_future_dataframe(periods=10*48 , freq='30min', include_history=False)
     predic = model.predict(f) 
 
-nous avons injecté nos données au modèle ``Prophet()`` puis utilisé la fonction ``model.make_future_dataframe()`` qui prend en entrée :
+Nous avons injecté nos données au modèle ``Prophet()`` puis utilisé la fonction ``model.make_future_dataframe()`` qui prend en entrée :
 
 periods :  la période à laquelle on veut prédire  
 
@@ -277,7 +277,7 @@ Après avoir sélectionné les colonnes *ds* , *yhat*, *yhat_lower* et *yhat_upp
 |479| 2022-12-09 22:30:00 |	62138.959324 |	56701.752888 |	67733.019959 |
 +---+---------------------+--------------+---------------+---------------+
 
-Finalement , nous allons sélectionner les les lignes qui nous intéressent (celles qui contiennent la prédiction pour la journée du 8 décembre 2022), puis renommer les colonnes de notre nouveau dataframe:
+Finalement, nous allons sélectionner les lignes qui nous intéressent (celles qui contiennent la prédiction pour la journée du 8 décembre 2022), puis renommer les colonnes de notre nouveau dataframe:
 
 .. code:: python
 
