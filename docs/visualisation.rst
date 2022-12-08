@@ -16,7 +16,7 @@ Une carte par villes avec la distribution des différentes valeurs de consommati
 
 1. Carte par départements et histogramme:
 ---------------------------------------------------------------------
-Pour la construction de la carte on a utilisé un fichier geojson que l'on a relié aux données de consommation électriques.
+Pour la construction de la carte, nous avons utilisé un fichier geojson que nous aavons relié aux données de consommation électriques.
 
 .. _url1: https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson
 
@@ -40,8 +40,8 @@ Création de la carte par départements :
         zoom=4.8,
     )
 
-Pour l'histogramme on a construit deux menus déroulants, un pour choisir la région et un autre pour choisir le département.
-Ces deux menus déroulants étant liées on a du construire des fonctions utilisant des "callback" pour permettre un choix dynamique.
+Pour l'histogramme, nous avons construit deux menus déroulants, un pour choisir la région et un autre pour choisir le département.
+Ces deux menus déroulants étant liés, nous avons du construire des fonctions utilisant des "callback" pour permettre un choix dynamique.
 
 Histogramme:
 
@@ -79,7 +79,7 @@ Menus déroulants :
     
 2. Carte par villes : 
 --------------------------------------------------------------------------------
-Pour la carte par villes on aussi utilisé un fichier geojson disponible ici:
+Pour la carte par villes, nous avons aussi utilisé un fichier geojson disponible ici:
 
 .. _url2: = https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/communes.geojson
 
